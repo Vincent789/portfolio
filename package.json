@@ -1,6 +1,8 @@
 {
   "name": "portfolio",
   "version": "0.1.0",
+  "homepage": ".",
+  "start_url": ".",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.9",
@@ -8,11 +10,18 @@
     "@testing-library/user-event": "^12.7.3",
     "@tweenjs/tween.js": "^16.8.2",
     "arrow-keys-react": "^1.0.6",
+    "axios": "^0.21.1",
+    "bootstrap": "^4.6.0",
     "react": "^17.0.1",
+    "react-bootstrap": "^1.5.2",
     "react-dom": "^17.0.1",
     "react-howler": "^5.0.0",
+    "react-responsive-masonry": "^2.1.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "react-simple-chatbot": "^0.6.1",
     "simplex-noise": "^2.4.0",
+    "styled-components": "^5.2.1",
     "three": "^0.126.0",
     "web-vitals": "^1.1.0"
   },

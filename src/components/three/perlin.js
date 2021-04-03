@@ -1,7 +1,7 @@
 /*jshint esversion: 6 */
 //credit: https://gist.github.com/banksean/304522#file-perlin-noise-simplex-js
 
-class Perlin {
+ export class Perlin {
     constructor() {
         this.grad3 =    
             [[1,1,0],[-1,1,0],[1,-1,0],[-1,-1,0], 
@@ -91,4 +91,6 @@ class Perlin {
     }
 }
 
-exports.Perlin = Perlin;
+//export default Perlin
+
+/*exports.Perlin = Perlin;*/

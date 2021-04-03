@@ -18,6 +18,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import SimplexNoise from 'simplex-noise'
 //tween
 import * as TWEEN from '@tweenjs/tween.js'
+import { Camera } from "three";
 
 var scene, camera, renderer, composer
 var terrain, geometry, sun, road, water, model
@@ -138,6 +139,19 @@ function IntegerBetween(min, max) {
     tween.start()
   }
     
+  function tweenSetRotY(model, value){
+    var tween = new TWEEN.Tween(model.rotation)
+    tween.to({y: value}, 1500)
+    tween.easing(TWEEN.Easing.Exponential.Out);
+    tween.start()
+  }
+
+  function tweenSetRotX(model, value){
+    var tween = new TWEEN.Tween(model.rotation)
+    tween.to({x: value}, 1500)
+    tween.easing(TWEEN.Easing.Exponential.Out);
+    tween.start()
+  }
 /*  function couleurImmeuble(){
     let base = 0, aleatoire = 255;
     let R = base + Math.floor(Math.random()*aleatoire);
@@ -202,8 +216,10 @@ function Background(props) {
 
   //console.log("PROPSHERREE !!!! "+props.keyPressed)
   var key = props.keyPressed
-  var keyDrop = props.keyDrop
+  //var keyDrop = props.keyDrop
+  console.log("ROTATION "+ props.cameraRotation)
 
+  
   //console.log("PROPSHERREE !!!! "+props.secondKey)
 
   useEffect(() => {
@@ -216,6 +232,9 @@ function Background(props) {
         // Camera
         camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
         camera.position.set( -6, 0.9, 32.7 );
+        
+        camera.rotation.y = props.cameraRotation
+        
 
         // Renderer
         const canvas = document.querySelector("#c");
@@ -667,7 +686,7 @@ function Background(props) {
     function addSphere(){
 
         // The loop will move from z position of -1000 to z position 1000, adding a random particle at each position. 
-        for ( var z= -1000; z < 1000; z+=10 ) {
+        for ( var z= -1000; z < 1000; z+=60 ) {
 
             // Make a sphere (exactly the same as before). 
             var geometry   = new THREE.BoxGeometry(3, 3, 3)
@@ -678,7 +697,7 @@ function Background(props) {
 
             // This time we give the sphere random x and y positions between -500 and 500
             sphere.position.x = Math.random() * 1000 - 500;
-            sphere.position.y = Math.random() * 1000 - 500;
+            sphere.position.y = Math.random() * 1000 - 50;
 
             // Then set the z position to where it is in the loop (distance of camera)
             sphere.position.z = z;
@@ -707,6 +726,19 @@ function Background(props) {
   
        
       }, [])
+
+
+      function onWindowResize() {
+
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+
+        renderer.setSize( window.innerWidth, window.innerHeight );
+        renderer.antialias = true;
+
+      }
+
+      window.addEventListener( 'resize', onWindowResize, false );
 
       function render() {
         /*var time = performance.now() * 0.001;*/
@@ -814,7 +846,7 @@ function Background(props) {
         phare4.visible = true;
         phare5.visible = true;
         tweenSetZ(model, 30)
-        tweenSetZ(camera, 32)
+        tweenSetZ(camera, 32.5)
         vitesse = 0.3
         pharearrieregauche.power = 15*Math.PI
         setTimeout(function () {
@@ -828,8 +860,18 @@ function Background(props) {
         }, 1000);
       }
       controls()
-
       
+      function cameraCheck(){
+        if ( props.cameraRotation == 45 ){
+          tweenSetRotY(camera, -1.6)
+          tweenSetRotX(camera, -0.005)
+          //camera.rotation.x =  4;
+          tweenSetX(camera, -30)
+          tweenSetZ(camera, -10)
+          console.log("hey i'm here")
+        }
+      }
+      cameraCheck()
 
       var animate = function () {
           
@@ -838,7 +880,6 @@ function Background(props) {
           console.log("hey i've been here")
           tween.update()
         }*/
-
 
 
         TWEEN.update()
@@ -876,8 +917,9 @@ function Background(props) {
               immeublesA[i].position.z = positionDepart;
               immeublesB[i].position.z = positionDepart - distance/2;
 
-            
-              if (coins[i].position.z == 33){
+
+              
+              if (coins[i].position.z > 33){
                 console.log("COLLISION")
               }
 
