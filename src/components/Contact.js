@@ -23,7 +23,7 @@ import {
         
         <Link to="/" className="closing-cross">X</Link>
         <div className="container">
-            <h1 className="page-title">Contact</h1>
+            <h1 className="page-title page-title-contact">Contact</h1>
             <Bobotou />
         </div>
     </div>

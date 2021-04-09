@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { SepiaShader } from 'three/examples/jsm/shaders/SepiaShader.js';
 import { FilmPass } from 'three/examples/jsm/postprocessing/FilmPass.js';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
@@ -20,6 +20,7 @@ import SimplexNoise from 'simplex-noise'
 import * as TWEEN from '@tweenjs/tween.js'
 import { Camera } from "three";
 
+var compteur;
 var scene, camera, renderer, composer
 var terrain, geometry, sun, road, water, model
 
@@ -45,10 +46,12 @@ var nombre = 15;
 var distance = 12;
 var depart = 100; 
 var vitesse = 0.3;
-      
+
+var inGame = false;
+
 var positionDepart;
 
-var zrank = 10;
+var zrank = 100;
 
 // coins
 var coin;
@@ -132,6 +135,13 @@ function IntegerBetween(min, max) {
     tween.start()
   }
 
+  function tweenSetY(model, value){
+    var tween = new TWEEN.Tween(model.position)
+    tween.to({y: value}, 1500)
+    tween.easing(TWEEN.Easing.Exponential.Out);
+    tween.start()
+  }
+
   function tweenSetZ(model, value){
     var tween = new TWEEN.Tween(model.position)
     tween.to({z: value}, 1500)
@@ -211,8 +221,11 @@ function adjustVertices(terrain, offset, panela, panelb, modificator) {
     terrain.geometry.computeVertexNormals();
 }
 
-
 function Background(props) {
+
+  //React states
+  const [coinsVisible, setCoinsVisible] = useState(false);
+  const [milliseconds, setMilliseconds] = useState(0);
 
   //console.log("PROPSHERREE !!!! "+props.keyPressed)
   var key = props.keyPressed
@@ -264,6 +277,8 @@ function Background(props) {
         //composer.addPass( bloomPass );
         //composer.addPass( effectSepia );
         composer.addPass( effectFilm );
+
+        //une vitesse pièce vitessepiece = vitesse
 
         /*
         const geometrytoto = new THREE.CylinderGeometry( 1, 1, 100, 40 );
@@ -453,6 +468,8 @@ function Background(props) {
            gltf.scene.rotation.y=Math.PI*1.5;// initial rotation here
            model = gltf.scene;
            scene.add( model );
+
+           props.propsOn()
 
          },
          // called while loading is progressing
@@ -647,46 +664,35 @@ function Background(props) {
             }
       } 
 
-      function Coins(i)
-        {     
-          if (i<nombre)
-          {
-              if (i == 0)
-              {   
-                  var geometrycoin = new THREE.CylinderGeometry( 5, 5, 20, 32 );
-                  var materialcoin = new THREE.MeshBasicMaterial( {color: 0xffff00} );
-                  coin = new THREE.Mesh( geometrycoin, materialcoin );
-                  coin.rotation.x = Math.PI/2
-                  coin.scale.set(0.03, 0.003, 0.03)
-                  var chosenValue = Math.random() < 0.5 ? -6.5 : -5.2;
-                  coin.position.set(chosenValue, 0.5, positionDepart)
-                  //console.log("COIN 0 "+coin)
-                  coins.push(coin); 
-                  scene.add( coin );
-                  Coins( i + 1 );
-              }
-           else
-              {           
-                  coin = coins[0].clone(); 
-                  var chosenValue = Math.random() < 0.5 ? -6.5 : -5.2;
-                  coin.position.set(chosenValue, 0.5,-depart + i * distance); 
-                  coins.push(coin);          
-                  scene.add( coin );
-                  Coins(i + 1);
-              }
+      function Coins(i) {
+          if (i < nombre) {
+            if (i == 0) {
+              var geometrycoin = new THREE.CylinderGeometry(5, 5, 20, 32);
+              var materialcoin = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+              coin = new THREE.Mesh(geometrycoin, materialcoin);
+              coin.rotation.x = Math.PI / 2;
+              coin.scale.set(0.03, 0.003, 0.03);
+              coin.visible = coinsVisible
+            } else {
+              coin = coins[0].clone();
+            }
+            var chosenValue = Math.random() < 0.5 ? -6.5 : -5.2;
+            coin.position.set(chosenValue, 0.5, -depart + i * distance);
+            coins.push(coin);
+            scene.add(coin);
+            Coins(i + 1);
+          } else {
+            animate();
           }
-          else     
-          {
-              animate()
-          }
-      }  
+      }
+  
 
       Arbres(0); 
 
     function addSphere(){
 
         // The loop will move from z position of -1000 to z position 1000, adding a random particle at each position. 
-        for ( var z= -1000; z < 1000; z+=60 ) {
+        for ( var z= -1000; z < 1000; z+=10 ) {
 
             // Make a sphere (exactly the same as before). 
             var geometry   = new THREE.BoxGeometry(3, 3, 3)
@@ -697,13 +703,13 @@ function Background(props) {
 
             // This time we give the sphere random x and y positions between -500 and 500
             sphere.position.x = Math.random() * 1000 - 500;
-            sphere.position.y = Math.random() * 1000 - 50;
+            sphere.position.y = (Math.random() * 1000) + 20;
 
             // Then set the z position to where it is in the loop (distance of camera)
             sphere.position.z = z;
 
             // scale it up a bit
-            sphere.scale.x = sphere.scale.y = 2;
+            //sphere.scale.x = sphere.scale.y = 2;
 
             //add the sphere to the scene
             scene.add( sphere );
@@ -804,8 +810,8 @@ function Background(props) {
           tweenSetZ(phare6, 26.28)
           tweenSetZ(cylinderwheel1, 25.75)
           tweenSetZ(cylinderwheel2, 24.1)
-          zrank = 5;
-          vitesse = 1.2
+          zrank = 50;
+          vitesse = 0.6
           offsetModifier = 0.01
           /*
           setTimeout(function(){
@@ -822,7 +828,7 @@ function Background(props) {
           }, 4000);*/          
         }
         else if (key == "ArrowDown"){
-          vitesse = 0.5
+          vitesse = 0.2
           //console.log('update')
           tweenSetZ(phareavantdroit, 28.7)
           tweenSetZ(phareavantgauche, 28.7)
@@ -836,7 +842,7 @@ function Background(props) {
           tweenSetZ(cylinderwheel1, 30.74)
           tweenSetZ(cylinderwheel2, 29.1)
           offsetModifier = 0.001
-          zrank = 10;
+          zrank = 100;
           get_break()
         }
       }
@@ -862,25 +868,45 @@ function Background(props) {
       controls()
       
       function cameraCheck(){
-        if ( props.cameraRotation == 45 ){
+        if 
+        ( props.cameraRotation == 45 ){
           tweenSetRotY(camera, -1.6)
           tweenSetRotX(camera, -0.005)
           //camera.rotation.x =  4;
           tweenSetX(camera, -30)
           tweenSetZ(camera, -10)
-          console.log("hey i'm here")
+          //console.log("hey i'm here")
+        }
+        else if 
+        ( props.cameraRotation == 55 ){
+          //tweenSetRotY(camera, +1.6)
+          //tweenSetRotX(camera, +0.005)
+          //camera.rotation.x =  4;
+          tweenSetRotY(camera, 0)
+          //tweenSetRotX(camera, -0.005)
+          tweenSetX(camera, -6)
+          tweenSetY(camera, 0.9)
+          tweenSetZ(camera, 36.7)
+          inGame = true
+          compteur.style.visibility='visible'
+          //setCoinsVisible(true)
+          //console.log("hey i'm here")
+
+          //camera.position.set( -6, 0.9, 32.7 );
         }
       }
       cameraCheck()
 
       var animate = function () {
-          
+        compteur = document.getElementById("compteur");
         requestAnimationFrame( animate )
         /*if (props.keyPressed == "ArrowLeft"){
           console.log("hey i've been here")
           tween.update()
         }*/
 
+        setMilliseconds(milliseconds+1)
+        console.log(milliseconds)
 
         TWEEN.update()
 
@@ -900,6 +926,7 @@ function Background(props) {
                   
               // if the particle is too close move it to the back
               if(star.position.z>1000) star.position.z-=2000; 
+              if(star.position.y<100) star.position.y-=100; 
               
           }
       
@@ -913,14 +940,38 @@ function Background(props) {
               positionDepart = arrondi2d(roadlines[i].position.z + vitesse) 
               arbres[i].position.z= positionDepart;
               roadlines[i].position.z = positionDepart;
-              coins[i].position.z = positionDepart;
+              if (inGame == true){
+                coins[i].position.z = positionDepart;
+                coins[i].visible = true; // la pièce redevient visible quand on la ramène à la positionDepart
+              }
               immeublesA[i].position.z = positionDepart;
               immeublesB[i].position.z = positionDepart - distance/2;
 
 
-              
-              if (coins[i].position.z > 33){
-                console.log("COLLISION")
+              if (inGame == true){
+                if (coins[i].position.z > phareavantgauche.position.z) {
+                  // collision possible si...
+                  if (coins[i].position.x < -6 && phareavantgauche.position.x < -6) {
+                    // la pièce et la voiture sont à gauche ou...
+                    coins[i].visible = false;
+                  } else if (
+                    coins[i].position.x > -6 &&
+                    phareavantgauche.position.x > -6
+                  ) {
+                    // ...si la pièce et la voiture sont à droite
+                    coins[i].visible = false;
+                  } else if (
+                    coins[i].position.z <=
+                    phareavantgauche.position.z + vitesse
+                  ) {
+                    // compteur incrémenté s'il n'y a pas eu collision, mais une seule fois au moment où la pièce passe
+                    compteur.innerHTML = parseInt(compteur.innerHTML) + 1;
+                    if (compteur.innerHTML == 10) {
+                      compteur.innerHTML = "GAME OVER !";
+                      vitesse = 0;
+                    }
+                  }
+                }
               }
 
   
@@ -936,7 +987,9 @@ function Background(props) {
                   }
                   arbres[i].position.z = positionDepart;
                   roadlines[i].position.z = positionDepart;
-                  coins[i].position.z = positionDepart;
+                  if (inGame == true){
+                   coins[i].position.z = positionDepart;
+                  }
                   immeublesA[i].position.z = positionDepart;
                   immeublesB[i].position.z = positionDepart - distance/2;
                 
@@ -961,8 +1014,22 @@ function Background(props) {
       }
         //animate()
         return (
+          /*
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            border: 20px solid white;
+          */
           <div>
-            <canvas id="c" />
+            <canvas 
+              id="c"
+              style={{
+                boxSizing: "border-box",
+                MozBoxSizing: "border-box",
+                WebkitBoxSizing: "border-box",
+                border: props.displayBorder
+              }}
+            />
           </div>
         )
     }

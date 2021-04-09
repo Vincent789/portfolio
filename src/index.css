@@ -8,6 +8,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
 }
 
 code {
@@ -22,10 +23,10 @@ code {
   top: 0;
   left: 0;
   z-index: -300;
-    box-sizing: border-box;
+    /*box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    border: 20px solid white;
+    border: 20px solid white;*/
 }
 
 .page-title {
@@ -34,11 +35,23 @@ code {
   text-align: left;
   position: relative;
   left: -7px;
+  margin-bottom: 0px;
 }
 
 .home-title {
   font-family: 'Cabin', sans-serif;
   font-size: 4em;
+  letter-spacing: 0em;
+  text-transform: uppercase;
+  text-align: left;
+  color: white;
+  padding-left: 5%;
+  line-height: 0.8em;
+}
+
+.home-sub-sub {
+  font-family: 'Cabin', sans-serif;
+  font-size: 2em;
   letter-spacing: 0em;
   text-transform: uppercase;
   text-align: left;
@@ -54,21 +67,43 @@ code {
   color: white;
 }
 
+.score-container {
+  font-family: 'Cabin', sans-serif;
+  text-align: left;
+  padding-left: 5%;
+  color: white;
+}
+
+.score-text{
+  font-size: 25px;
+}
+
+/*Navigation*/
+
+
 .home-menu {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
   list-style-type: none;
   display: block;
   float: left;
   padding-left: 5%;
-  margin-top: 5em;
+  height: 30px;
 }
 
 .home-menu li {
   display: inline-block;
 }
 
+.sound-home-site{
+  width: 50px;
+}
+
 .home-menu li a {
   text-decoration: none;
   color: white;
+  font-size: 1em;
   margin-right: 4em;
 }
 
@@ -117,18 +152,17 @@ code {
   margin-left: 5%;
 }
 
-.soundPlayer{
-  background-color: white;
-  color: black;
+.soundPlayer {
+  background-color: transparent;
   border: none;
-  border-radius: 0px;
-  font-weight: bold;
-  margin-left: 5%;
+  position: fixed;
+  top: 30px;
+  right: 30px;
 }
 
 .soundPlayer:hover{
-  background-color: black;
-  color: white;
+  opacity: 0.5;
+  transition-duration: 1s;
 }
 
 
@@ -142,7 +176,7 @@ code {
 
 .game-control-container {
   width: 100%;
-  margin-top: 5em;
+  margin-top: 2em;
   text-align: center;
 }
 
@@ -150,18 +184,291 @@ code {
   background-color: white;
   padding: 1em 4em 1em 4em;
   color: black;
+  border: none;
+  font-size: initial;
+  width: 200px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
+.level-link:hover {
+  background-color: transparent;
+  color: white;
+}
 
 h2.game-control-title {
   text-align: center;
   color: white;
   font-size: 100px;
+  margin-bottom: 0px;
 }
 
 .rsc-container {
   width: 100%!important;
 }
-/*
 
-*/
+.preloader{
+  background-color: black;
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  padding-top: 13em;
+}
+
+.enterapp{
+  background-color: black;
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 200;
+  padding-top: 13em;
+  text-align: center;
+}
+
+.loading-text{
+  font-family: 'Cabin', sans-serif;
+  font-size: 2em;
+  color: white;
+  text-align: center;
+}
+
+.loading-subtext{
+  font-family: 'Cabin', sans-serif;
+  font-size: 1em;
+  color: white;
+  text-align: center;
+}
+
+.enter-button{
+  background-color: transparent;
+  color: black;
+  width: 20%;
+  margin-left: 40%;
+  border: none;
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: 700;
+  margin-top: 2em;
+  margin-right: 4px;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+.sound-button{
+  background-color: transparent;
+  border: none;
+  font-size: 1.5em;
+  font-weight: 700;
+  margin-top: 1em;
+  margin-right: 4px;
+  padding-right: 1em;
+  padding-left: 1em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+.sound-button:hover{
+  opacity: 0.5;
+  transition-duration: 1s;
+}
+
+.sound-loader{
+  width: 80px;
+}
+
+.play-button{
+  background-color: transparent;
+  color: white;
+  border: 2px solid white;
+  font-size: 1.5em;
+  font-weight: 700;
+  margin-top: 0.5em;
+  margin-right: 4px;
+  padding-right: 1em;
+  padding-left: 1em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+.play-button:hover{
+  transition-duration: 0.5s;
+  border: 2px solid transparent;
+}
+
+.sound-button:hover{
+  background-color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  transition-duration: 0.5s;
+}
+
+
+.enter-button:hover{
+  opacity: 0.5;
+  cursor: pointer;
+  transition-duration: 0.5s;
+}
+
+.enter-sound{
+  padding-top: 2px;
+}
+
+.portfolio-container{
+  width: 100%;
+  float: left;
+}
+
+.story-container{
+  width: 100%;
+  float: left;
+}
+
+.rh-barnes-home{
+  width: 60%;
+  margin-right: 5%;
+  margin-left: 20%;
+}
+
+.visual-container {
+  width: 30%;
+  float: left;
+}
+
+.home-story {
+  margin-top: 4.5em;
+  font-size: 20px;
+  font-family: 'Cabin', sans-serif;
+  text-align: left;
+  width: 70%;
+  float: left;
+  color: white;
+}
+
+.project-link{
+  text-decoration: none;
+}
+
+.game-control-description {
+  text-align: center;
+  color: white;
+}
+
+/*Bot*/
+/*
+.bhdplU {
+  height: 100px;
+}
+
+.jWXCDs {
+  border-radius: 0px 18px 18px 18px;
+}
+
+.jgaQwj{
+  height: 100px;
+}
+
+.dlVROl{
+  border-radius: 18px 0px 18px 18px;
+}*/
+
+.rsc-ts-image {
+  width: 150px;
+  height: 150px !important;;
+}
+
+.rsc-input {
+  position: fixed;
+  bottom: 0px;
+  border-radius: 0px;
+}
+
+.rsc-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.rsc-os-option-element {
+  background-color: black;
+  color: white;
+  border: 1px solid white;
+}
+
+.rsc-ts-user .rsc-ts-bubble {
+  background-color: black;
+  border: 1px solid white;
+}
+
+.rsc-content::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.rsc-content {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+
+.projets-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.projets-container {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+
+
+/*media queries*/
+@media screen and (max-width: 640px) {
+  .home-title {
+    font-size: 4em;
+    text-align: center;
+    padding-left: 0%;
+  }
+  .rh-barnes-home {
+    width: 30%;
+    margin-right: 35%;
+    margin-left: 35%;
+  }
+  .visual-container {
+    width: 100%;
+    float: left;
+  }
+  .home-story {
+    margin-top: 0.3em;
+    font-size: 20px;
+    text-align: center;
+    width: 100%;
+  }
+  .home-menu {
+    position: fixed;
+    top: 20px;
+    left: 10%;
+    display: block;
+    text-align: center;
+  }
+  .play-button {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+    font-size: 1.5em;
+    font-weight: 700;
+    /* margin-top: 30%; */
+    margin-left: 40%;
+    width: 20%;
+    /* text-align: center; */
+    padding-right: 1em;
+    padding-left: 1em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+  }
+}

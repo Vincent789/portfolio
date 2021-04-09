@@ -106,9 +106,21 @@ import {
                            }
                        }
                     >
-                        <h2 className="project-title">{post.title.rendered}</h2>
-                        <p className="project-content">{post.content.rendered}</p>
-                        <img className="project-featured-media" src={post.fimg_url} alt="image_thumbnail"></img>
+                        <a 
+                            href={post.lien_du_projet} 
+                            className="project-link"
+                            style={{
+                                color: txtColor,
+                                transition: "all 2s ease",
+                                WebkitTransition: "all 2s ease",
+                                MozTransition: "all 2s ease"
+                            }}
+                            target="_blank"   
+                        >
+                            <h2 className="project-title">{post.title.rendered}</h2>
+                            <p className="project-content" dangerouslySetInnerHTML={{__html: post.content.rendered}}></p>
+                            <img className="project-featured-media" src={post.featured_image_url} alt="image_thumbnail"></img>
+                        </a>
                     </div>
                 ))}
             </Masonry>
