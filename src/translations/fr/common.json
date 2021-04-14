@@ -1,0 +1,51 @@
+{
+    "welcome": {
+        "title": "Bienvenue",
+        "text1": "Ceci est un site expérimental.",
+        "text2": "Si votre ordinateur est trop ancien, et qu'il a des lenteurs...",
+        "text3": "... n'hésitez pas à checker mon Linked'In ci-dessous.",
+        "enter": "Entrer",
+        "sound": "Avec ou sans son (avec son c'est mieux)"
+    },
+    "home": {
+        "title": "L'histoire",
+        "story1": "Pour le détective privé",
+        "story2": "Russel Hennessy Barnes,",
+        "story3": "l'année avait été vraiment merdique.",
+        "story4": "Maintenant, il avait décidé de... conduire.",
+        "play": "Jouer",
+        "menu1": "Projets",
+        "menu2": "Contact"
+    },
+    "contact": {
+        "baseline": "Bureau du lieutenant Patricia Bot",
+        "1message": "Bonsoir !  Je suis le lieutenant Patricia Bot de la police de Los-Bastos, que puis-je faire pour vous ?",
+        "2v1": "Je voudrais contacter le grand chef.",
+        "2v2": "J'aimerais mener une enquête.",
+        "2v3": "Je voudrais conspirer avec vous...",
+        "3message": "Ok, je vous met en contact avec Vincent.",
+        "4message": "Sur quoi voudriez-vous enquêter ?",
+        "5message": "Ohhhh, je vois (chuchotement) À propos de quoi voudriez vous conspirer ?",
+        "50v1": "Je voudrais faire un coup d'état.",
+        "50v2": "La Terre... comment dire... ne me semble pas plate.",
+        "50v3": "Je perçois des forces étranges qui m'entourent.",
+        "150message": "Ça m'arrive aussi... de quelles forces s'agit-il selon vous ?",
+        "250v1": "Je pense qu'elles ne sont pas d'ici... elles viennent d'un autre espace temps.",
+        "250v2": "Ce sont des morts, et ils veulent me manger.",
+        "250v3": "Je crois que ce sont des communistes.",
+        "350message": "Hum... sometimes I do so. What do you think they are ?",
+        "550message": "DES COMMUNISTES. C'est une urgence. Vous devriez immédiatemment contacter Vincent !!!",
+        "650v1": "Bien sûr, faisons ça. Le devoir avant tout.",
+        "650v2": "Ahem... vous ne pensez pas qu'il est communiste aussi ?",
+        "750message": "Oh vouuussss... vous aimez conspirer. Un autre sujet de conspiration ?",
+        "850v1": "Oui... ne trouvez-vous pas la terre un peu... plate ?",
+        "850v2": "Et si nous faisions un putch ?",
+        "70message": "Un peu mon neveu. Mais je me demande toujours où va l'eau. Le savez-vous ?",
+        "170v1": "Elle tombe dans l'espace et on ne la revoit plus jamais.",
+        "170v2": "Elle s'évapore et c'est comme ça que sont créés les nuages."
+    },
+    "game": {
+        "story1": "Durant cette année, le privé R.H Barnes avait dépensé beaucoup d'argent dans des choses futiles.",
+        "story2": "Si seulement il avait pu sauver quelques piécettes."
+    }
+}

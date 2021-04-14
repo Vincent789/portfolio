@@ -6,11 +6,10 @@ import {
     BrowserRouter as Router,
     Link
   } from "react-router-dom";
-
+  
   
 
   function Contact(props) {
-    
     //const [isShown, setIsShown] = useState(false);
     const [bgColor, setBgColor] = useState("black");
     const [txtColor, setTxtColor] = useState("white");

@@ -246,10 +246,10 @@ h2.game-control-title {
 
 .enter-button{
   background-color: transparent;
-  color: black;
+  color: white;
+  border: 1px solid white;
   width: 20%;
   margin-left: 40%;
-  border: none;
   text-align: center;
   font-size: 1.5em;
   font-weight: 700;
@@ -425,6 +425,25 @@ h2.game-control-title {
   scrollbar-width: none;  /* Firefox */
 }
 
+
+.language-controls {
+  position: fixed;
+  top: 40px;
+  left: 30px;
+  z-index: 40000;
+}
+
+.language-button {
+  background-color: transparent;
+  border: 1px solid white;
+  padding-left: 0.5em 1em;
+  margin-left: 10px;
+  color: white;
+}
+
+.language-button:hover {
+  border: none;
+}
 
 
 /*media queries*/

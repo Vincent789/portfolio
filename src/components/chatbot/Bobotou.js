@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import ChatBot from 'react-simple-chatbot';
 import { ThemeProvider } from 'styled-components';
+import {useTranslation} from "react-i18next";
 
   function Bobotou(props) {
-    
+    const {t} = useTranslation('common');
     //const [isShown, setIsShown] = useState(false);
     let [state, setState] = useState({        
         answer: "Welcome ! I'm Lt Clark Bot from SAPD's office !",
@@ -39,56 +40,56 @@ import { ThemeProvider } from 'styled-components';
                 <ChatBot
                 botAvatar=  'bot.png'
                 userAvatar=  'barnes.png'
-                headerTitle="Lt Patricia Bot's office"
+                headerTitle={t('contact.baseline')}
                 speechSynthesis={{ enable: false, lang: 'en' }}
                 steps={[
                     {
                     id: '1',
-                    message: 'Good evening !  I am Lt Patricia Bot from Los Bastos Police Department. What can I do for you ?',
+                    message: t('contact.1message'),
                     trigger: '2',
                     },
                     {
                         id: '2',
                         options: [
-                        { value: 1, label: 'Directly contact the headquarter.', trigger: '3' },
-                        { value: 2, label: 'Investigate on a subject.', trigger: '4' },
-                        { value: 3, label: 'Conspirate...', trigger: '5' },
+                        { value: 1, label: t('contact.2v1'), trigger: '3' },
+                        { value: 2, label: t('contact.2v2'), trigger: '4' },
+                        { value: 3, label: t('contact.2v3'), trigger: '5' },
                         ],
                     },
                     {
                     id: '3',
-                    message: "Ok, let's contact Vincent",
+                    message: t('contact.3message'),
                     end: true,
                     },
                     {
                     id: '4',
-                    message: 'What would you like to investigate on ?',
+                    message: t('contact.4message'),
                     end: true,
                     },
                     {
                     id: '5',
-                    message: "Hooo, I see... What would you like to conspirate about ?",
+                    message: t('contact.5message'),
                     trigger: '50',
                     },
                     {
                         id: '50',
                         options: [
-                        { value: 1, label: 'I would like to overthrow the government.', trigger: '3' },
-                        { value: 2, label: 'Earth might not be so round... you see...', trigger: '70' },
-                        { value: 3, label: 'I feel I am surrounded by stranger forces...', trigger: '150' },
+                        { value: 1, label: t('contact.50v1'), trigger: '3' },
+                        { value: 2, label: t('contact.50v2'), trigger: '70' },
+                        { value: 3, label: t('contact.50v3'), trigger: '150' },
                         ],
                     },
                     {
                         id: '150',
-                        message: "Hum... sometimes I do so. What do you think they are ?",
+                        message: t('contact.150message'),
                         trigger: '250',
                     },
                     {
                         id: '250',
                         options: [
-                        { value: 1, label: 'I think they are not from here... they are from an outer space.', trigger: '350' },
-                        { value: 2, label: "I'm sure they are deaths, and they want to eat me.", trigger: '450' },
-                        { value: 3, label: 'I feel they are communists.', trigger: '550' },
+                        { value: 1, label: t('contact.250v1'), trigger: '350' },
+                        { value: 2, label: t('contact.250v2'), trigger: '450' },
+                        { value: 3, label: t('contact.250v3'), trigger: '550' },
                         ],
                     },
                     {
@@ -103,38 +104,38 @@ import { ThemeProvider } from 'styled-components';
                     },
                     {
                         id: '550',
-                        message: "OK. That's an emergency. Would you like to contact Vincent about this ?",
+                        message: t('contact.550message'),
                         trigger: '650',
                     },
                     {
                         id: '650',
                         options: [
-                        { value: 1, label: 'Yes. Of course. Private R.H.Barnes reporting for duty.', trigger: '350' },
-                        { value: 2, label: "Hum. Don,t you think is a commmunist too ?", trigger: '750' }
+                        { value: 1, label: t('contact.650v1'), trigger: '350' },
+                        { value: 2, label: t('contact.650v2'), trigger: '750' }
                         ],
                     },
                     {
                         id: '750',
-                        message: "Ohhh you my boy, you sure like to conspirate... any other subject you'd like to conspirate with ?",
+                        message: t('contact.750message'),
                         trigger: '850',
                     },
                     {
                         id: '850',
                         options: [
-                        { value: 1, label: "Yes... don't you think earth is kinda... flat ?", trigger: '70' },
-                        { value: 2, label: "Let's conspirate against the governement...", trigger: '450' }
+                        { value: 1, label: t('contact.850v1'), trigger: '70' },
+                        { value: 2, label: t('contact.850v2'), trigger: '450' }
                         ],
                     },
                     {
                         id: '70',
-                        message: "Sure... it's not round ! But where goes water when it reaches the edges ?",
+                        message: t('contact.70message'),
                         trigger: '170',
                     },
                     {
                         id: '170',
                         options: [
-                        { value: 1, label: "It falls into space. Didn't you know that ?", trigger: '350' },
-                        { value: 2, label: "It evaporates and that's how clouds are created", trigger: '450' }
+                        { value: 1, label: t('contact.170v1'), trigger: '350' },
+                        { value: 2, label: t('contact.170v2'), trigger: '450' }
                         ],
                     },
                 ]}

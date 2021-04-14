@@ -19,10 +19,17 @@ import SimplexNoise from 'simplex-noise'
 //tween
 import * as TWEEN from '@tweenjs/tween.js'
 import { Camera } from "three";
+import {Howl, Howler} from 'howler';
 
 var compteur;
 var scene, camera, renderer, composer
 var terrain, geometry, sun, road, water, model
+
+var soundacc = new Howl({
+  src: ['accel.mp3'],
+  volume: 0.2
+});
+
 
 var stars=[]
 // trees
@@ -194,7 +201,7 @@ function getRandomInt(max) {
 const Perlin = require('./perlin.js').Perlin;
 var perlin = new Perlin();
 var peak = 7;
-var smoothing = 20;
+var smoothing = 40;
 
 function randomIntervalNumber (interval, quantity) {
    let array = []
@@ -812,7 +819,11 @@ function Background(props) {
           tweenSetZ(cylinderwheel2, 24.1)
           zrank = 50;
           vitesse = 0.6
-          offsetModifier = 0.01
+          offsetModifier = 0.001
+
+          console.log("HEYYYYYYY")
+          
+          //props.carSound(0.4, true)
           /*
           setTimeout(function(){
             vitesse = 0.3
@@ -843,6 +854,7 @@ function Background(props) {
           tweenSetZ(cylinderwheel2, 29.1)
           offsetModifier = 0.001
           zrank = 100;
+          
           get_break()
         }
       }
@@ -906,7 +918,6 @@ function Background(props) {
         }*/
 
         setMilliseconds(milliseconds+1)
-        console.log(milliseconds)
 
         TWEEN.update()
 

@@ -1,6 +1,6 @@
 import React,{ Component } from "react";
 
-class Score extends React.Component {
+class Score extends Component {
     constructor(props) {
       super(props);
       this.state = {

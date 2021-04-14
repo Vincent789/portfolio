@@ -1,0 +1,51 @@
+{
+    "welcome": {
+        "title": "Welcome",
+        "text1": "This is a fully experimental website based on Three.js and React.",
+        "text2": "If your computer is not wealthy enough, it could cause performances issues.",
+        "text3": "In that case, feel three (huhu) to check my LinkedIn.",
+        "enter": "Enter",
+        "sound": "With or without sound, wiiithh orr wiiithouuttt soounnndd (U2) ?"       
+    },
+    "home": {
+        "title": "The Story",
+        "story1": "For private detective",
+        "story2": "Russel Hennessy Barnes,",
+        "story3": "year had been a real shithole.",
+        "story4": "Now he had decided to... drive.",
+        "play": "Play",
+        "menu1": "Projects",
+        "menu2": "Contact"
+    },
+    "contact": {
+        "baseline": "Lt Patricia Bot's office",
+        "1message": "Good evening !  I am Lt Patricia Bot from Los Bastos Police Department. What can I do for you ?",
+        "2v1": "Directly contact the headquarter.",
+        "2v2": "Investigate on a subject.",
+        "2v3": "Conspirate...",
+        "3message": "Ok, let's contact Vincent",
+        "4message": "What would you like to investigate on ?",
+        "5message": "Hooo, I see... What would you like to conspirate about ?",
+        "50v1": "I would like to overthrow the government.",
+        "50v2": "Earth might not be so round... you see...",
+        "50v3": "I feel I am surrounded by stranger forces...",
+        "150message": "Hum... sometimes I do so. What do you think they are ?",
+        "250v1": "I think they are not from here... they are from an outer space.",
+        "250v2": "I'm sure they are deaths, and they want to eat me.",
+        "250v3": "I feel they are communists.",
+        "350message": "Hum... sometimes I do so. What do you think they are ?",
+        "550message": "OK. That's an emergency. Would you like to contact Vincent about this ?",
+        "650v1": "Yes. Of course. Private R.H.Barnes reporting for duty.",
+        "650v2": "Hum. Don,t you think is a commmunist too ?",
+        "750message": "Ohhh you my boy, you sure like to conspirate... any other subject you'd like to conspirate with ?",
+        "850v1": "Yes... don't you think earth is kinda... flat ?",
+        "850v2": "Let's conspirate against the governement...",
+        "70message": "Sure... it's not round ! But where goes water when it reaches the edges ?",
+        "170v1": "It falls into space. Didn't you know that ?",
+        "170v2": "It evaporates and that's how clouds are created"
+    },
+    "game": {
+        "story1": "Year had been long and private R.H Barnes had spent all his cash on useless purposes.",
+        "story2": "If only he could get some coins."
+    }
+}
