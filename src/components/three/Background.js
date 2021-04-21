@@ -20,6 +20,7 @@ import SimplexNoise from 'simplex-noise'
 import * as TWEEN from '@tweenjs/tween.js'
 import { Camera } from "three";
 import {Howl, Howler} from 'howler';
+import { useStore } from '../../State'
 
 var compteur;
 var scene, camera, renderer, composer
@@ -30,6 +31,7 @@ var soundacc = new Howl({
   volume: 0.2
 });
 
+var vitesse = 0.5
 
 var stars=[]
 // trees
@@ -52,7 +54,7 @@ var seafront = []; */
 var nombre = 15;
 var distance = 12;
 var depart = 100; 
-var vitesse = 0.3;
+
 
 var inGame = false;
 
@@ -94,10 +96,6 @@ const params = {
     bloomThreshold: 10,
     bloomRadius: 1
 };
-
-//
-
-
 
 /*Immeubles*/
 class immeuble {
@@ -194,6 +192,7 @@ function IntegerBetween(min, max) {
 
 var speed = 0.0008;
 
+
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
@@ -233,6 +232,8 @@ function Background(props) {
   //React states
   const [coinsVisible, setCoinsVisible] = useState(false);
   const [milliseconds, setMilliseconds] = useState(0);
+  const [missedCounter, setMissedCounter] = useState(0);
+  const [gobedCounter, setCobedCounter] = useState(0);
 
   //console.log("PROPSHERREE !!!! "+props.keyPressed)
   var key = props.keyPressed
@@ -274,13 +275,13 @@ function Background(props) {
         effectSepia.uniforms[ "amount" ].value = 0.5;
         const effectFilm = new FilmPass( 0.35, 0.025, 648, false );
 
-		const bloomPass = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 );
-		bloomPass.threshold = params.bloomThreshold;
-		bloomPass.strength = params.bloomStrength;
-		bloomPass.radius = params.bloomRadius;
+        const bloomPass = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 );
+        bloomPass.threshold = params.bloomThreshold;
+        bloomPass.strength = params.bloomStrength;
+        bloomPass.radius = params.bloomRadius;
 
         composer = new EffectComposer( renderer );
-		composer.addPass( renderScene );
+		    composer.addPass( renderScene );
         //composer.addPass( bloomPass );
         //composer.addPass( effectSepia );
         composer.addPass( effectFilm );
@@ -516,13 +517,7 @@ function Background(props) {
   
         }
   
-        updateSun()
-        
-      
-        
-
-          
-          
+        updateSun()  
 
         // Water
 
@@ -770,7 +765,7 @@ function Background(props) {
 
 
       function controls() {
-        if (key == "ArrowLeft"){
+        if (key == "ArrowLeft" || props.mobileDirection == "left"){
           //console.log('update')
           tweenSetX(model, -6.5)
           tweenSetX(phareavantdroit, -6.014)
@@ -786,7 +781,7 @@ function Background(props) {
           tweenSetX(cylinderwheel1, -6.95)
           tweenSetX(cylinderwheel2, -6.95)
         }
-        else if (key == "ArrowRight"){
+        else if (key == "ArrowRight" || props.mobileDirection == "right"){
           //console.log('update')
           tweenSetX(model, -5)
           tweenSetX(camera, -6)
@@ -802,7 +797,7 @@ function Background(props) {
           tweenSetX(cylinderwheel1, -5.45)
           tweenSetX(cylinderwheel2, -5.45)
         }
-        else if (key == "ArrowUp"){
+        else if (key == "ArrowUp" || props.mobileDirection == "up"){
           tweenSetZ(model, 25)
           tweenSetZ(phareavantdroit, 23.7)
           tweenSetZ(phareavantgauche, 23.7)
@@ -818,9 +813,8 @@ function Background(props) {
           tweenSetZ(cylinderwheel1, 25.75)
           tweenSetZ(cylinderwheel2, 24.1)
           zrank = 50;
-          vitesse = 0.6
+          vitesse = 0.8;
           offsetModifier = 0.001
-
           console.log("HEYYYYYYY")
           
           //props.carSound(0.4, true)
@@ -838,8 +832,7 @@ function Background(props) {
             tweencamera.start()
           }, 4000);*/          
         }
-        else if (key == "ArrowDown"){
-          vitesse = 0.2
+        else if (key == "ArrowDown" || props.mobileDirection == "down"){
           //console.log('update')
           tweenSetZ(phareavantdroit, 28.7)
           tweenSetZ(phareavantgauche, 28.7)
@@ -853,28 +846,27 @@ function Background(props) {
           tweenSetZ(cylinderwheel1, 30.74)
           tweenSetZ(cylinderwheel2, 29.1)
           offsetModifier = 0.001
-          zrank = 100;
-          
+          zrank = 100;      
           get_break()
         }
       }
       function get_break() {
+        vitesse = 0.2
         phare2.visible = true;
         phare3.visible = true;
         phare4.visible = true;
         phare5.visible = true;
         tweenSetZ(model, 30)
         tweenSetZ(camera, 32.5)
-        vitesse = 0.3
         pharearrieregauche.power = 15*Math.PI
         setTimeout(function () {
-          vitesse = 0.5
           tweenSetZ(camera, 33)
           phare2.visible = false;
           phare3.visible = false;
           phare4.visible = false;
           phare5.visible = false;
           pharearrieregauche.power = 7*Math.PI
+          vitesse = 0.5
         }, 1000);
       }
       controls()
@@ -882,25 +874,45 @@ function Background(props) {
       function cameraCheck(){
         if 
         ( props.cameraRotation == 45 ){
-          tweenSetRotY(camera, -1.6)
-          tweenSetRotX(camera, -0.005)
-          //camera.rotation.x =  4;
-          tweenSetX(camera, -30)
-          tweenSetZ(camera, -10)
+          tweenSetRotY(camera, -1)
+          //tweenSetRotX(camera, -0.005)
+          tweenSetZ(camera, 40)
+          tweenSetX(camera, -9)
           //console.log("hey i'm here")
+        }
+        else if ( props.cameraRotation == 65 ){
+          //console.log("backtohome")
+          //tweenSetX(camera, -6)
+          //tweenSetY(camera, 0.9)
+          //tweenSetZ(camera, 40)
+          //tweenSetZ(model, 30)
+          //tweenSetY(model, -0.2)
+          //tweenSetX(model, -5)
         }
         else if 
         ( props.cameraRotation == 55 ){
           //tweenSetRotY(camera, +1.6)
           //tweenSetRotX(camera, +0.005)
           //camera.rotation.x =  4;
-          tweenSetRotY(camera, 0)
+          //tweenSetRotY(camera, 0)
           //tweenSetRotX(camera, -0.005)
+          //tweenSetX(camera, -6)
+          //tweenSetY(camera, 0.9)
+          tweenSetZ(camera, 33)
+          tweenSetRotY(camera, 0)
           tweenSetX(camera, -6)
-          tweenSetY(camera, 0.9)
-          tweenSetZ(camera, 36.7)
-          inGame = true
-          compteur.style.visibility='visible'
+          //*****************************************************************
+          //Partie ajoutée pour début du jeu. coins[i].position.z < -10 : il faudra mettre la valeur - 10 dans une variable et en ajuster la valeur en fonction de la rapidité du jeu : inférieure pour un jeu plus rapide, supérieure pour un jeu plus lent... à tester.
+
+                if (inGame == false) {  //Retarder l'arrivée des pièces en début de jeu
+                  for (let i = 0; i < nombre; i++) {
+                    if (coins[i].position.z < -10) {
+                      coins[i].visible = true;
+                    }
+                    inGame = true
+                  }
+                }
+          //*****************************************************************
           //setCoinsVisible(true)
           //console.log("hey i'm here")
 
@@ -944,77 +956,50 @@ function Background(props) {
           }
         
           animateStars()
-      
-
-          for  (let i = 0; i < nombre; i++)
-          {   
-              positionDepart = arrondi2d(roadlines[i].position.z + vitesse) 
-              arbres[i].position.z= positionDepart;
-              roadlines[i].position.z = positionDepart;
-              if (inGame == true){
-                coins[i].position.z = positionDepart;
-                coins[i].visible = true; // la pièce redevient visible quand on la ramène à la positionDepart
-              }
-              immeublesA[i].position.z = positionDepart;
-              immeublesB[i].position.z = positionDepart - distance/2;
-
-
-              if (inGame == true){
-                if (coins[i].position.z > phareavantgauche.position.z) {
-                  // collision possible si...
-                  if (coins[i].position.x < -6 && phareavantgauche.position.x < -6) {
-                    // la pièce et la voiture sont à gauche ou...
-                    coins[i].visible = false;
-                  } else if (
-                    coins[i].position.x > -6 &&
-                    phareavantgauche.position.x > -6
-                  ) {
-                    // ...si la pièce et la voiture sont à droite
-                    coins[i].visible = false;
-                  } else if (
-                    coins[i].position.z <=
-                    phareavantgauche.position.z + vitesse
-                  ) {
-                    // compteur incrémenté s'il n'y a pas eu collision, mais une seule fois au moment où la pièce passe
-                    compteur.innerHTML = parseInt(compteur.innerHTML) + 1;
-                    if (compteur.innerHTML == 10) {
-                      compteur.innerHTML = "GAME OVER !";
-                      vitesse = 0;
-                    }
+          for (let i = 0; i < nombre; i++) {
+            positionDepart = arrondi2d(roadlines[i].position.z + vitesse)
+            if (inGame == true) {
+              if (coins[i].position.z > phareavantgauche.position.z
+                && coins[i].position.z < phareavantgauche.position.z + 1) {   // collision possible si... (2° condition, sinon la voiture peut faire disparaître des coins déjà passés.)
+                if (coins[i].position.x < -6 && phareavantgauche.position.x < -6) {// pièce et voiture à gauche ou...
+                  coins[i].visible = false;
+                } else if (coins[i].position.x > -6 && phareavantgauche.position.x > -6) {// ...pièce et voiture à droite
+                  coins[i].visible = false;
+                } else if (coins[i].position.z <= phareavantgauche.position.z + vitesse) { // compteur incrémenté s'il n'y a pas eu collision, mais une seule fois au moment où la pièce passe          
+                  if (coins[i].visible == true) { //sinon les coins invisibles en début de jeu sont comptés comme perdus
+                    compteur.innerHTML = parseInt(compteur.innerHTML) + 1
+                    props.coinsCounter(parseInt(compteur.innerHTML), props.level)
+                  }
+                  // compteur.innerHTML = "Coin N° " + i + "  " + coins[i].visible
+                  if (compteur.innerHTML == 10) {
+                    compteur.innerHTML = "GAME OVER !";
                   }
                 }
               }
-
-  
-              if (roadlines[i].position.z > 80)
-              {
-                  if (i==(nombre-1)) 
-                  {
-                    positionDepart = arrondi2d((roadlines[0].position.z) - distance + vitesse);
-                  }
-                  else
-                  {
-                    positionDepart = arrondi2d((roadlines[i+1].position.z) - distance + vitesse);
-                  }
-                  arbres[i].position.z = positionDepart;
-                  roadlines[i].position.z = positionDepart;
-                  if (inGame == true){
-                   coins[i].position.z = positionDepart;
-                  }
-                  immeublesA[i].position.z = positionDepart;
-                  immeublesB[i].position.z = positionDepart - distance/2;
-                
-                
-                echellearbres = echelleArbres();
-                arbres[i].position.y = echellearbres*1.5; //essai de valeur : tatonnement
-                arbres[i].scale.set(echellearbres,echellearbres,echellearbres); 
-                let couleur = couleurImmeuble();
-                immeublesA[i].material.emissive.set(couleurImmeuble());
-                immeublesB[i].material.emissive.set(couleurImmeuble());
+            }
+            if (roadlines[i].position.z > 80) {
+              if (i == (nombre - 1)) {
+                positionDepart = arrondi2d((roadlines[0].position.z) - distance + vitesse);
               }
-          }
-
-        render()
+              else {
+                positionDepart = arrondi2d((roadlines[i + 1].position.z) - distance + vitesse);
+              }
+              if (inGame == true) {
+                coins[i].visible = true; // la pièce redevient visible quand on la ramène à la positiond'origine
+              }
+              echellearbres = echelleArbres();
+              arbres[i].position.y = echellearbres * 1.5; //essai de valeur : tatonnement
+              arbres[i].scale.set(echellearbres, echellearbres, echellearbres);
+              immeublesA[i].material.emissive.set(couleurImmeuble());
+              immeublesB[i].material.emissive.set(couleurImmeuble());
+            }
+            arbres[i].position.z = positionDepart;
+            roadlines[i].position.z = positionDepart;
+            coins[i].position.z = positionDepart;
+            immeublesA[i].position.z = positionDepart;
+            immeublesB[i].position.z = positionDepart - distance / 2;
+        }
+          render()
         
         let offset = Date.now() * offsetModifier;
         

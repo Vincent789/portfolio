@@ -16,7 +16,23 @@ code {
     monospace;
 }
 
+#compteur {
+  visibility: hidden;
+  height: 0px;
+}
 
+h1.game-over {
+  font-size: 7em;
+  color: white;
+  text-align: center;
+  margin-bottom: 0em;
+  margin-top: 0em;
+}
+
+.ratio {
+  margin-top: 0.3em;
+  margin-bottom: 0.3em;
+}
 
 #c {
   position: fixed;
@@ -158,6 +174,7 @@ code {
   position: fixed;
   top: 30px;
   right: 30px;
+  z-index: 2;
 }
 
 .soundPlayer:hover{
@@ -181,19 +198,20 @@ code {
 }
 
 .level-link {
-  background-color: white;
-  padding: 1em 4em 1em 4em;
-  color: black;
-  border: none;
-  font-size: initial;
+  background-color: transparent;
+  padding: 1em 2em 1em 2em;
+  color: white;
+  border: 1px solid white;
+  font-size: 20px;
   width: 200px;
-  font-weight: bold;
+  font-weight: 900;
   cursor: pointer;
 }
 
 .level-link:hover {
   background-color: transparent;
   color: white;
+  border: 1px solid transparent;
 }
 
 h2.game-control-title {
@@ -214,7 +232,7 @@ h2.game-control-title {
   width: 100%;
   top: 0;
   left: 0;
-  z-index: 100;
+  z-index: 3;
   padding-top: 13em;
 }
 
@@ -225,7 +243,7 @@ h2.game-control-title {
   width: 100%;
   top: 0;
   left: 0;
-  z-index: 200;
+  z-index: 5;
   padding-top: 13em;
   text-align: center;
 }
@@ -242,6 +260,8 @@ h2.game-control-title {
   font-size: 1em;
   color: white;
   text-align: center;
+  width: 90%;
+  margin-left: 5%;
 }
 
 .enter-button{
@@ -423,31 +443,128 @@ h2.game-control-title {
 .projets-container {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+  z-index: 10;
 }
 
+.illuvincent {
+  width: 40%;
+  float: left;
+}
+
+.textvincent {
+  width: 50%;
+  margin-left: 10%;
+  float: left;
+}
 
 .language-controls {
   position: fixed;
   top: 40px;
   left: 30px;
   z-index: 40000;
+  z-index: 6;
 }
 
 .language-button {
   background-color: transparent;
-  border: 1px solid white;
   padding-left: 0.5em 1em;
   margin-left: 10px;
-  color: white;
 }
 
 .language-button:hover {
   border: none;
 }
 
+.arrowbutton{
+  background-color: transparent;
+  border: none;
+}
+
+.arrowsvg{
+  width: 20px;
+}
+
+.arrowtable{
+  display: none;
+}
+
+.linkedin-welcome {
+  background-color: transparent;
+  border: none;
+  position: fixed;
+  left: 34px;
+  bottom: 20px;
+}
+
+.linkedin-welcome:hover {
+  opacity: 0.5;
+  transition-duration: 1s;
+  cursor: pointer;
+}
+
+.linkedinSvg {
+  width: 40px;
+}
+
+@media screen and (max-width: 900px) {
+  .page-title {
+    font-family: "Cabin",sans-serif;
+    font-size: 8em;
+  }
+
+  .enter-button{
+    width: 40%;
+    margin-left: 30%;
+  }
+
+  .arrowtable{
+    position: fixed;
+    display: block;
+    bottom: 20px;
+    right: 20px;
+  }
+
+  .illuvincent {
+    width: 100%;
+    float: left;
+  }
+  
+  .textvincent {
+    width: 100%;
+    margin: 0px;
+    float: left;
+    padding-right: 10%;
+  }
+}
 
 /*media queries*/
 @media screen and (max-width: 640px) {
+  .page-title {
+    font-family: "Cabin",sans-serif;
+    font-size: 6em;
+  }
+
+  .enter-button{
+    width: 40%;
+    margin-left: 30%;
+  }
+
+  .game-control-description {
+    text-align: center;
+    color: white;
+    width: 60%;
+    margin-left: 20%;
+  }
+
+  .home-menu li a {
+    margin-right: 2.3em;
+    font-size: 12px;
+  }
+
+  .home-menu li a:hover {
+    margin-right: 2.3em;
+  }
+
   .home-title {
     font-size: 4em;
     text-align: center;
@@ -471,7 +588,7 @@ h2.game-control-title {
   .home-menu {
     position: fixed;
     top: 20px;
-    left: 10%;
+    left: 6%;
     display: block;
     text-align: center;
   }
@@ -482,12 +599,16 @@ h2.game-control-title {
     font-size: 1.5em;
     font-weight: 700;
     /* margin-top: 30%; */
-    margin-left: 40%;
-    width: 20%;
+    margin-left: 30%;
+    width: 40%;
     /* text-align: center; */
     padding-right: 1em;
     padding-left: 1em;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
+  }
+
+  .arrowtable{
+    display: block;
   }
 }

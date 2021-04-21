@@ -12,9 +12,9 @@ function Sound(props){
                     console.log("HEYYYYYYY")
                     soundacc = new Howl({
                         src: ['accel.mp3'],
-                        volume: 0.2
+                        volume: 0.05
                     });
-                    props.carSound(0.4, true)
+                    props.carSound(0.2, true)
                     soundacc.play();
                 }
                 else if (key == "ArrowDown")
@@ -22,7 +22,7 @@ function Sound(props){
                     console.log("HEYYYYYYY2")
                     soundbrk = new Howl({
                         src: ['breakrupteur.mp3'],
-                        volume: 0.2
+                        volume: 0.05
                     });
                     props.carSound(0.1, false)
                     soundbrk.play();

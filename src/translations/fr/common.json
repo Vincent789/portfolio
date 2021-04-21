@@ -15,7 +15,8 @@
         "story4": "Maintenant, il avait décidé de... conduire.",
         "play": "Jouer",
         "menu1": "Projets",
-        "menu2": "Contact"
+        "menu2": "Contact",
+        "menu3": "À propos"
     },
     "contact": {
         "baseline": "Bureau du lieutenant Patricia Bot",
@@ -23,9 +24,9 @@
         "2v1": "Je voudrais contacter le grand chef.",
         "2v2": "J'aimerais mener une enquête.",
         "2v3": "Je voudrais conspirer avec vous...",
-        "3message": "Ok, je vous met en contact avec Vincent.",
+        "3message": "Ok, je vous met en contact avec Vincent. Quel est votre nom ?",
         "4message": "Sur quoi voudriez-vous enquêter ?",
-        "5message": "Ohhhh, je vois (chuchotement) À propos de quoi voudriez vous conspirer ?",
+        "5message": "Ohhhh, je vois (chuchotement) À propos de quoi voudriez-vous conspirer ?",
         "50v1": "Je voudrais faire un coup d'état.",
         "50v2": "La Terre... comment dire... ne me semble pas plate.",
         "50v3": "Je perçois des forces étranges qui m'entourent.",
@@ -42,10 +43,62 @@
         "850v2": "Et si nous faisions un putch ?",
         "70message": "Un peu mon neveu. Mais je me demande toujours où va l'eau. Le savez-vous ?",
         "170v1": "Elle tombe dans l'espace et on ne la revoit plus jamais.",
-        "170v2": "Elle s'évapore et c'est comme ça que sont créés les nuages."
+        "170v2": "Elle s'évapore et c'est comme ça que sont créés les nuages.",
+        "270message": "Hum. Je ne suis pas sûr. Tout le monde sait que le cosmos n'existe pas.",
+        "370message": "Je vois... vous avez sûrement raison. Le gouvernement est au courant, d'après vous ?",
+        "470v1": "Vous avez tellement raison ! Nous devrions renverser le gouvernement et dire la vérité à tout le monde.",
+        "470v2": "You're going a bit to far... i'm here to send a message to chief Vincent Lhoste.",
+        "30message": "(Chuchotement) Je voudrais faire cela aussi... êtes vous sûr que personne ne vous a suivi ?",
+        "130v1": "Bien sûr ! Je suis discret comme un léopard.",
+        "130v2": "Non je ne suis pas sûr... peut-être pouvez-vous m'aider à me débarasser de ces personnes qui me suivent au quotidien ?",
+        "230message": "Très bonne idée... et comment voudriez-vous vous y prendre ?",
+        "330v1": "On pourrait débrancher internet et prendre le contrôle des institutions.",
+        "330v2": "Et si nous détruisions le quartier général du FMI ?",
+        "430message": "Ok. Vincent est un peu geek. Voulez-vous lui soumettre le projet ?",
+        "530message": "Très peu pour moi. Je tiens à mon argent et on ne peut pas dire que j'en aie beaucoup.",
+        "630v1": "Je vois... vous êtes un pur produit de ce système corrompu. Mettez-moi en contact avec le chef. C'est un vrai révolutionnaire, lui.",
+        "630v2": "Bien... nous ne serons jamais d'accord sur ce point... et si nous conspirions à propos de la platitude de la Terre ?",
+        "730v1": "Bien sûr. Lançons nous dans ce dangereux combat.",
+        "730v2": "Non merci. Je préfère parler de toutes ces forces obscure qui me poursuivent. J'entends des voix vous savez...",
+        "890message": "Les morts ne mangent pas car ils ne peuvent pas vous digérer. Mais vous semblez vous y connaître en morts... avez-vous un crime à rapporter au commissaire Lhoste ?",
+        "990v1": "Bien sûr.",
+        "990v2": "Non... je ne crois pas aux crimes... je ne crois pas non plus que la terre soit ronde.",
+        "1010message": "Hum... c'est un foutue bonne explication... mais qu'y a-t-il sous le sol, du coup ?",
+        "1020v1": "ILS sont sous le sol",
+        "1030message": "Je vois... et que pensez-vous qu'ILS soient ?",
+        "01message": "Bien {previousValue} ! Et quel est votre e-mail ?",
+        "02message": "Super. Que voulez-vous dire au commissaire Lhoste ?",
+        "03message": "C'est bien noté ! Passez une bonne soirée !",
+        "subject": "Un petit objet à rajouter ? Ça ira plus vite.",
+        "summarylabel": "Notes du Lt Bot",
+        "namelabel": "Votre joli nom :",
+        "emaillabel": "Votre chti email :",
+        "subjectlabel": "Votre sujet intelligent :",
+        "messagelabel": "Votre incroyable message :"
+    },
+    "validation": {
+        "name1": "Hum... un nom, pas un nombre.",
+        "name2": "Un nom, c'est moins de 60 caractères. Un pseudo ?",
+        "text": "Hey... j'accepte seulement du texte dans cette partie du formulaire !",
+        "text2": "Pas plus de 2000 caractères ici :) ! La planète ne vous en voudra pas.",
+        "mail": "J'ai demandé un mail... ceci ne semble pas en être un.",
+        "subject1": "Hhhh... j'attends du texte ici.",
+        "subject2": "Ahem... ça n'est pas un objet ça... c'est un roman. Donnez-moi 50 caractères maximum et j'en ferai des merveilles."
     },
     "game": {
         "story1": "Durant cette année, le privé R.H Barnes avait dépensé beaucoup d'argent dans des choses futiles.",
-        "story2": "Si seulement il avait pu sauver quelques piécettes."
+        "story2": "Si seulement il avait pu sauver quelques piécettes.",
+        "missed": "Pièces manquées : ",
+        "eaten": "Pièces gobées : ",
+        "home": "Accueil",
+        "retry": "Réessayer",
+        "contact": "17"
+    },
+    "projects": {
+        "title": "Projets",
+        "colorline": "Vous aimez la couleur :) ? Prenez-la : "
+    },
+    "about": {
+        "title": "À propos"
     }
 }

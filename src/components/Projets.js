@@ -6,12 +6,13 @@ import {
     Switch,
     Route,
     Link
-  } from "react-router-dom";
-
+} from "react-router-dom";
+import {useTranslation} from "react-i18next";
   
 
   function Projets(props) {
     
+    const {t} = useTranslation('common');
     //const [isShown, setIsShown] = useState(false);
     const [bgColor, setBgColor] = useState("black");
     const [txtColor, setTxtColor] = useState("white");
@@ -29,6 +30,35 @@ import {
         }
         return color;
     }
+
+    function getWindowDimensions() {
+        const { innerWidth: width, innerHeight: height } = window;
+        return {
+          width,
+          height
+        };
+    }
+
+    const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+    const [masonryCompressionLevel, setMCL] = useState(3);
+
+    useEffect(() => {
+        function handleResize() {
+            setWindowDimensions(getWindowDimensions());
+            if (getWindowDimensions().width > 1100){
+                setMCL(3)
+            }
+            else if (getWindowDimensions().width > 700 && getWindowDimensions().width < 1000){
+                setMCL(2)
+            }
+            else if (getWindowDimensions().width < 700){
+                setMCL(1)
+            }
+        }
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     function lightOrDark(color) {
 
@@ -85,21 +115,19 @@ import {
         
         <Link to="/" className="closing-cross">X</Link>
         <div className="container">
-        <h1 className="page-title">Projets</h1>
+        <h1 className="page-title">{t('projects.title')}</h1>
         <h3
             style={{
                 fontSize: "1em"
             }}
-        >{bgColor}</h3>
+        >
+        {t('projects.colorline')} {bgColor}
+        </h3>
             <div>
-            <Masonry columnsCount={3} gutter="40px">
+            <Masonry columnsCount={masonryCompressionLevel} gutter="40px">
                 {props.posts.map((post, index) => (
                     <div 
-                        onMouseEnter={() => {
-                             setBgColor(setBgRandomColor);
-                             setTxtColor(lightOrDark(bgColor))
-                            }
-                        }
+                        className="project-brick"
                         onMouseEnter={() => {
                             setBgColor(setBgRandomColor);
                             setTxtColor(lightOrDark(bgColor))

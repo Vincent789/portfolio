@@ -1,8 +1,8 @@
 import './App.css';
 import Background from './components/three/Background'
-import Score from './components/three/Score'
 import Projets from './components/Projets'
 import Contact from './components/Contact'
+import About from './components/About'
 import React,{ useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
@@ -16,13 +16,11 @@ import {GiSoundOn} from 'react-icons/gi'
 import { ReactSVG } from 'react-svg'
 import Sound from './components/sounddesign/Sound';
 import {useTranslation} from "react-i18next";
-
-
-
+import { useStore } from './State'
 //import Lottie from 'react-lottie';
 //import animationData from './lotties/data.json'
-    
 
+var level = 0
 
 function App() {
 
@@ -34,6 +32,13 @@ function App() {
       preserveAspectRatio: 'xMidYMid slice'
     }
   };*/
+  const bears = useStore(state => state.bears)
+
+  function Controls() {
+    const increasePopulation = useStore(state => state.increasePopulation)
+    return <button onClick={increasePopulation}>one up</button>
+  }
+
   const {t, i18n} = useTranslation('common');
   const [posts, setPosts] = useState([]);
   const [cameraRotation, setCameraRotation] = useState(0);
@@ -59,7 +64,11 @@ function App() {
   const leftPress = useKeyPress('ArrowLeft');
   const rightPress = useKeyPress('ArrowRight');
 
+  //sounds !!
   const [playing, setPlaying] = useState(false);
+  const [playingmain, setPlayingMain] = useState(false);
+  const [playingoffice, setPlayingOffice] = useState(false);
+
   const [displayGame, showTime] = useState("none");
   const [displayHome, lightsOff] = useState("block");
 
@@ -73,16 +82,28 @@ function App() {
   const [getIcon, changeIcon] = useState("soundon.svg");
   const [displayPl, disablePreloader] = useState("block");
 
+  const [btRefresh, refreshBt] = useState(false);
+
   const [accelerating, accelerate] = useState(false);
   const [decelerating, decelerate] = useState(false);
   const [carsound, movesound] = useState(0.1);
   const [basscar, basscarSet] = useState(false);
 
+  const [counterDisplay, displayCounter] = useState("block");
+  const [goDisplay, displayGo] = useState("none");
+
+  const [direction, setDirection] = useState("");
+
+  const [colorLang, colorSet] = useState("#ffffff");
+
 
   const [multiplicatorDivider, setMultiplicatorDivider] = useState(100);
 
   const [inGame, setGame] = useState(false);
-  const [gameLevel, setLevel] = useState("easy");
+  const [gameLevel, setLevel] = useState(0);
+  const [endGame, setGameEnd] = useState(false)
+  const [gameOver, setGameOver] = useState("Test")
+  const [counter, setCounter] = useState(0)
 
   let [state, setState] = useState({
     mainKey: "",
@@ -91,27 +112,93 @@ function App() {
 
   //acceleration and breaking
 
-
+  const callBackMissedCounter = (missed) => {
+    setCounter(missed)
+    //console.log(missed)
+    if (level == 0){
+      if (missed > 9){   
+        setGameOver("GAME OVER")
+        setGameEnd(true)
+        displayCounter("none")
+        displayGo("block")
+      }
+    }
+    if (level == 1){
+      if (missed > 3){   
+        setGameOver("GAME OVER")
+        setGameEnd(true)
+        displayCounter("none")
+        displayGo("block")
+      }
+    }
+    if (level == 2){
+      if (missed > 0){   
+        setGameOver("GAME OVER")
+        setGameEnd(true)
+        displayCounter("none")
+        displayGo("block")
+      }
+    }
+    /*
+    if (missed >4 && gameLevel == 1){
+      //console.log(" > 5 !!!")
+      setGameOver("GAME OVER")
+    }*/
+  }
   
   const callBackCarsounds = (param1, param2) => {
     movesound(param1)
     setTimeout(function(){ basscarSet(param2) }, 500);
   }
     
-  
+  const callBackColor = (color) => {
+    colorSet(color)
+  }
 
   const callBackPreloader = () => {
     disablePreloader("none")
   }
 
+  const callBackPlaying = (param1, param2) => {
+    if (param1 == true && param2 == "playing"){
+        setPlaying(true)
+        basscarSet(true)
+        setPlayingOffice(false)
+    }
+    else if (param1==false && param2 == "playing"){
+        setPlaying(false)
+        basscarSet(false)
+        setPlayingOffice(true)
+    }
+    else if (param1==false && param2 == "notplaying"){
+      setPlaying(true)
+      basscarSet(true)
+      setPlayingOffice(false)
+    }
+
+    /*if (playing==true){
+      setPlaying(value)
+      basscarSet(value)
+      setPlayingOffice(true)
+    }else if (value == true){
+      setPlaying(true)
+      basscarSet(true)
+      setPlayingOffice(false)
+    }*/
+  }
+
   function playingNotPlaying(){
     if (playing == false){
       setPlaying(true)
+      setPlayingMain(true)
+      basscarSet(true)
       changeIcon("soundon.svg")
     }
     else
     {
       setPlaying(false)
+      setPlayingMain(false)
+      basscarSet(false)
       changeIcon("soundoff.svg")
     }
   }
@@ -202,8 +289,37 @@ function App() {
         className="App"
         >
         <div className="language-controls">
-          <button className="language-button" onClick={() => i18n.changeLanguage('en')}>en</button>
-          <button className="language-button" onClick={() => i18n.changeLanguage('fr')}>fr</button>
+          <button 
+          className="language-button"
+          style={{
+            color: colorLang,
+            borderColor: colorLang,
+            border: "1px solid white",
+            transition: "all 2s ease",
+            WebkitTransition: "all 2s ease",
+            MozTransition: "all 2s ease"
+          }}
+          onClick={() => {
+            i18n.changeLanguage('en')
+            refreshBt(false)
+          }}
+          >en</button>
+          <button 
+          className="language-button" 
+          style={{
+            color: colorLang,
+            borderColor: colorLang,
+            border: "1px solid white",
+            transition: "all 2s ease",
+            WebkitTransition: "all 2s ease",
+            MozTransition: "all 2s ease"
+          }}
+          onClick={() => {
+            i18n.changeLanguage('fr')
+            refreshBt(true)
+          }}
+          >
+            fr</button>
         </div>
         <Sound
         keyPressed={state.mainKey}
@@ -247,6 +363,22 @@ function App() {
           >
             {t('welcome.enter')}
           </button>
+          <button
+          className="linkedin-welcome"
+          style={{
+                display: firstButton
+              }}
+          >
+            <a 
+              href="https://www.linkedin.com/in/vincent-lhoste-4a220792/"
+              target="_blank"
+            >
+              <ReactSVG
+                src="linkedin.svg"
+                className="linkedinSvg"
+              />
+            </a>
+          </button>
           <div 
             className="isSound"
             style={{
@@ -267,6 +399,7 @@ function App() {
             onClick={() => {
               disableEnter("none")
               changeIcon("soundon.svg")
+              setPlayingMain(true)
               setPlaying(true)
             }}
             >
@@ -332,24 +465,38 @@ function App() {
                           <li className="home-menu-item">
                             <Link to="/contact">{t('home.menu2')}</Link>
                           </li>
+                          <li className="home-menu-item">
+                            <Link to="/apropos">{t('home.menu3')}</Link>
+                          </li>
                         </ul>
                       </nav>
 
                       {/* A <Switch> looks through its children <Route>s and
                           renders the first one that matches the current URL. */}
                       <Switch>
+                        <Route path="/apropos">
+                          <About/>
+                        </Route>
                         <Route path="/contact">
-                          <Contact />
+                          <Contact 
+                            btRefresh={btRefresh}
+                            playCarSounds={callBackPlaying}
+                            playing={playing}
+                          />
                         </Route>
                         <Route path="/projets">
-                          <Projets posts={posts}/>
+                          <Projets 
+                          posts={posts}
+                          changeColor={callBackColor}
+                          />
                         </Route>
                       </Switch>
                     </div>
                   </Router>
                   <ReactHowler
                       src='shadingclub.mp3'
-                      playing={playing}
+                      playing={playingmain}
+                      loop={true}
                   />
                   <ReactHowler
                       src='carsound.mp3'
@@ -367,7 +514,13 @@ function App() {
                       src='basscar.mp3'
                       playing={basscar}
                       loop={true}
-                      volume={0.8}
+                      volume={carsound}
+                  />
+                  <ReactHowler
+                      src='office.mp3'
+                      playing={playingoffice}
+                      loop={true}
+                      volume={0.05}
                   />
               </div>
           </div>
@@ -378,33 +531,24 @@ function App() {
             display: displayGame
           }}
         >
-          <button
-            onClick={() => {
-              showTime("none")
-              lightsOff("block")
-            }
-          }
-          >
-            Quit
-          </button>
           <h2 className="game-control-title">Level</h2>
           <div className="game-control-container">
-            <button 
+            <button
               className="level-link"
               onClick={() => {
                 setGame(true)
                 setCameraRotation(55)
                 showTime("none")
                 setBorder("0px solid white")
-                //letsPlay("block")
                 setVisibility("visible")
+                level = 0
               }}
             >
-              Easy
+              Difficult
             </button>
           </div>
           <div className="game-control-container">
-            <button 
+            <button
               className="level-link"
               onClick={() => {
                 setGame(true)
@@ -412,14 +556,14 @@ function App() {
                 showTime("none")
                 setBorder(false)
                 setVisibility("visible")
-                //letsPlay("block")
+                level = 1
               }}
             >
               Hard
             </button>
           </div>
           <div className="game-control-container">
-            <button 
+            <button
               className="level-link"
               onClick={() => {
                 setGame(true)
@@ -427,7 +571,7 @@ function App() {
                 showTime("none")
                 setBorder(false)
                 setVisibility("visible")
-                //letsPlay("block")
+                level = 2
               }}
             >
               Insane
@@ -441,6 +585,10 @@ function App() {
         cameraRotation={cameraRotation}
         propsOn={callBackPreloader}
         displayBorder={displayBorder}
+        coinsCounter={callBackMissedCounter}
+        level={gameLevel}
+        gameEnd={endGame}
+        mobileDirection={direction}
         />
        <div 
           className="compteur-container"
@@ -450,15 +598,113 @@ function App() {
           }}
        >
           <h1 id="compteur" className="home-title">0</h1>
-          <h3 className="home-sub-sub">Coins missed</h3>
-          <Score multiplicatorDivider={multiplicatorDivider}/>
+          <div
+            className="home-sub-sub"
+            style = {{
+              display: counterDisplay
+            }}
+          >
+          <h6 className="ratio">
+            {t('game.missed')} {counter}
+          </h6>
+          <h6 className="ratio">
+            {t('game.eaten')} {counter}
+          </h6>
+          <table
+            className="arrowtable"
+          >
+            <tbody>
+              <tr>
+                <td></td>
+                <td>
+                  <button 
+                    className="arrowbutton"
+                    onClick={() => {
+                      setDirection("up")
+                    }}>
+                    <ReactSVG src="arrowup.svg" className="arrowsvg arrowup"/>
+                  </button>
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  <button 
+                    className="arrowbutton"
+                    onClick={() => {
+                      setDirection("left")
+                    }}>
+                    <ReactSVG src="arrowleft.svg" className="arrowsvg arrowleft"/>
+                  </button>
+                </td>
+                <td></td>
+                <td>
+                  <button 
+                    className="arrowbutton"
+                    onClick={() => {
+                      setDirection("right")
+                    }}>
+                    <ReactSVG src="arrowright.svg" className="arrowsvg arrowright"/>
+                  </button>
+            </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>
+                  <button 
+                    className="arrowbutton"
+                    onClick={() => {
+                      setDirection("down")
+                    }}>
+                    <ReactSVG src="arrowdown.svg" className="arrowsvg arrowdown"/>
+                  </button>
+                </td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+          <div
+            style = {{
+              display: goDisplay
+            }}>
+              <h1 
+                className="game-over"
+              >{gameOver}</h1>
+              <button 
+                className="enter-button" 
+                onClick={() => {
+                  //setGame(false)
+                  lightsOff("block")
+                  setBorder("20px solid white")
+                  displayGo("none")
+                  setGameEnd(false)
+                  setVisibility("hidden")
+                }}>
+                {t('game.home')}
+              </button>
+              <button className="enter-button">{t('game.retry')}</button>
+              <Router>
+                <Link to="/contact">
+                  <button className="enter-button">
+                    {t('game.contact')}
+                  </button>
+                </Link>
+                <Switch>
+                  <Route path="/contact">
+                    <Contact 
+                      btRefresh={btRefresh}
+                      playCarSounds={callBackPlaying}
+                      playing={playing}
+                    />
+                  </Route>
+                </Switch>
+              </Router>
+              
+          </div>
        </div>
       </div>
   );
-}
-
-function About() {
-  return <h2 className="fontTester">About</h2>;
 }
 
 export default App;
