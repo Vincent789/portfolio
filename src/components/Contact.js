@@ -2,6 +2,7 @@ import React, {setState, useState, useEffect} from "react";
 import Masonry from "react-responsive-masonry"
 import axios from "axios";
 import Bobotou from "./chatbot/Bobotou";
+import ReactHowler from 'react-howler'
 import {
     BrowserRouter as Router,
     Link
@@ -11,18 +12,22 @@ import {
     //const [isShown, setIsShown] = useState(false);
     const [bgColor, setBgColor] = useState("black");
     const [txtColor, setTxtColor] = useState("white");
-    
+    const [playingLocal, setPlayingLocal] = useState(false);
+    const [playingoffice, setPlayingOffice] = useState(false);
+
     useEffect(() => {
         // This gets called after every render, by default
         // (the first one, and every one after that)
-        console.log('render Contact!');
+
+        console.log('mounting Contact !');
+        props.contactOpened(true)
         if (props.playing == true){
-            props.playCarSounds(false, "playing")
+            setPlayingOffice(true)
         }
         // If you want to implement componentWillUnmount,
         // return a function from here, and React will call
         // it prior to unmounting.
-        return () => console.log('unmounting...');
+        return () => console.log('unmounting Contact !');
       }, []);
 
     return (
@@ -30,27 +35,27 @@ import {
             backgroundColor: bgColor,
             color: txtColor,
         }}>
-        
-        <Link 
-            to="/" 
-            className="closing-cross"
-            onClick={() => {
-                //setGame(false)
-                if (props.playing == true){
-                    props.playCarSounds(true, "playing")
-                }
-                else if (props.playing == false){
-                    props.playCarSounds(false, "notplaying")
-                }
-            }}
-        >
-        X
-        </Link>
-        <div className="container">
-            <h1 className="page-title page-title-contact">Contact</h1>
-            <Bobotou btRefresh={props.btRefresh}/>
+            <ReactHowler
+                        src='office.mp3'
+                        playing={playingoffice}
+                        loop={true}
+                        volume={0.05}
+            />
+            <Link 
+                to="/" 
+                className="closing-cross"
+                onClick={() => {
+                    props.contactOpened(false)
+                    setPlayingOffice(false)
+                }}
+            >
+            X
+            </Link>
+            <div className="container">
+                <h1 className="page-title page-title-contact">Contact</h1>
+                <Bobotou btRefresh={props.btRefresh}/>
+            </div>
         </div>
-    </div>
     );
 }
 

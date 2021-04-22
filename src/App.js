@@ -65,9 +65,11 @@ function App() {
   const rightPress = useKeyPress('ArrowRight');
 
   //sounds !!
-  const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = useState("false")
+
+  const [playingCarsound, setPlayingCarSound] = useState(false);
+  const [playingWaves, setPlayingWaves] = useState(false);
   const [playingmain, setPlayingMain] = useState(false);
-  const [playingoffice, setPlayingOffice] = useState(false);
 
   const [displayGame, showTime] = useState("none");
   const [displayHome, lightsOff] = useState("block");
@@ -95,7 +97,8 @@ function App() {
   const [direction, setDirection] = useState("");
 
   const [colorLang, colorSet] = useState("#ffffff");
-
+  
+  const [contact, setContact] = useState(false)
 
   const [multiplicatorDivider, setMultiplicatorDivider] = useState(100);
 
@@ -159,37 +162,43 @@ function App() {
     disablePreloader("none")
   }
 
-  const callBackPlaying = (param1, param2) => {
-    if (param1 == true && param2 == "playing"){
-        setPlaying(true)
-        basscarSet(true)
-        setPlayingOffice(false)
+  const callBackContact = (value) => {
+    if (playing == true){
+      if (value == true){
+        if ( playingCarsound == true && playingWaves == true && basscar == true ){
+          setPlayingCarSound(false)
+          setPlayingWaves(false)
+          basscarSet(false)
+        }
+        else 
+        {
+          setPlayingCarSound(false)
+          setPlayingWaves(false)
+          basscarSet(false)
+        }
+      }
+      else
+      {
+        if ( playingCarsound == false && playingWaves == false && basscar == false ){
+          setPlayingCarSound(true)
+          setPlayingWaves(true)
+          basscarSet(true)
+        }
+      }
     }
-    else if (param1==false && param2 == "playing"){
-        setPlaying(false)
-        basscarSet(false)
-        setPlayingOffice(true)
+    else
+    {
+      setPlayingCarSound(false)
+      setPlayingWaves(false)
+      basscarSet(false)
     }
-    else if (param1==false && param2 == "notplaying"){
-      setPlaying(true)
-      basscarSet(true)
-      setPlayingOffice(false)
-    }
-
-    /*if (playing==true){
-      setPlaying(value)
-      basscarSet(value)
-      setPlayingOffice(true)
-    }else if (value == true){
-      setPlaying(true)
-      basscarSet(true)
-      setPlayingOffice(false)
-    }*/
   }
 
   function playingNotPlaying(){
     if (playing == false){
       setPlaying(true)
+      setPlayingCarSound(true)
+      setPlayingWaves(true)
       setPlayingMain(true)
       basscarSet(true)
       changeIcon("soundon.svg")
@@ -197,6 +206,8 @@ function App() {
     else
     {
       setPlaying(false)
+      setPlayingCarSound(false)
+      setPlayingWaves(false)
       setPlayingMain(false)
       basscarSet(false)
       changeIcon("soundoff.svg")
@@ -283,12 +294,18 @@ function App() {
   
   }
 
+  
 
   return (
       <div 
         className="App"
         >
-        <div className="language-controls">
+        <div 
+          className="language-controls"
+          style={{
+            display: displayHome
+          }}
+        >
           <button 
           className="language-button"
           style={{
@@ -297,7 +314,7 @@ function App() {
             border: "1px solid white",
             transition: "all 2s ease",
             WebkitTransition: "all 2s ease",
-            MozTransition: "all 2s ease"
+            MozTransition: "all 2s ease",
           }}
           onClick={() => {
             i18n.changeLanguage('en')
@@ -324,7 +341,7 @@ function App() {
         <Sound
         keyPressed={state.mainKey}
         carSound={callBackCarsounds}
-        soundPlaying={playing}
+        soundPlaying={playingCarsound}
         />
         <div className="enterapp"
         style={{
@@ -399,8 +416,10 @@ function App() {
             onClick={() => {
               disableEnter("none")
               changeIcon("soundon.svg")
-              setPlayingMain(true)
               setPlaying(true)
+              setPlayingMain(true)
+              setPlayingCarSound(true)
+              setPlayingWaves(true)
             }}
             >
               <ReactSVG src="soundon.svg" className="sound-loader"/>
@@ -480,7 +499,7 @@ function App() {
                         <Route path="/contact">
                           <Contact 
                             btRefresh={btRefresh}
-                            playCarSounds={callBackPlaying}
+                            contactOpened={callBackContact}
                             playing={playing}
                           />
                         </Route>
@@ -500,13 +519,13 @@ function App() {
                   />
                   <ReactHowler
                       src='carsound.mp3'
-                      playing={playing}
+                      playing={playingCarsound}
                       loop={true}
                       volume={carsound}
                   />
                   <ReactHowler
                       src='waves.mp3'
-                      playing={playing}
+                      playing={playingWaves}
                       loop={true}
                       volume={carsound}
                   />
@@ -515,12 +534,6 @@ function App() {
                       playing={basscar}
                       loop={true}
                       volume={carsound}
-                  />
-                  <ReactHowler
-                      src='office.mp3'
-                      playing={playingoffice}
-                      loop={true}
-                      volume={0.05}
                   />
               </div>
           </div>
@@ -694,7 +707,7 @@ function App() {
                   <Route path="/contact">
                     <Contact 
                       btRefresh={btRefresh}
-                      playCarSounds={callBackPlaying}
+                      contactOpened={callBackContact}
                       playing={playing}
                     />
                   </Route>
