@@ -22,7 +22,7 @@ import { Camera } from "three";
 import {Howl, Howler} from 'howler';
 import { useStore } from '../../State'
 
-var compteur;
+var compteur, gains;
 var scene, camera, renderer, composer
 var terrain, geometry, sun, road, water, model
 
@@ -923,6 +923,7 @@ function Background(props) {
 
       var animate = function () {
         compteur = document.getElementById("compteur");
+        gains = document.getElementById("gains");
         requestAnimationFrame( animate )
         /*if (props.keyPressed == "ArrowLeft"){
           console.log("hey i've been here")
@@ -960,19 +961,28 @@ function Background(props) {
             positionDepart = arrondi2d(roadlines[i].position.z + vitesse)
             if (inGame == true) {
               if (coins[i].position.z > phareavantgauche.position.z
-                && coins[i].position.z < phareavantgauche.position.z + 1) {   // collision possible si... (2° condition, sinon la voiture peut faire disparaître des coins déjà passés.)
+                && coins[i].position.z < phareavantgauche.position.z + 1) {   // collision possible si... (2° conditiion, sinon la voiture peut faire disparaître des coins déjà passés.)
                 if (coins[i].position.x < -6 && phareavantgauche.position.x < -6) {// pièce et voiture à gauche ou...
-                  coins[i].visible = false;
+                  if (coins[i].visible == true) {  // sinon les coins, même invisibles, sont comptés jusqu'à ce qu'ils reviennent au début
+                    gains.innerHTML = parseInt(gains.innerHTML) + 1
+                    props.coinsCounterEaten(parseInt(gains.innerHTML))
+                  }
+                  coins[i].visible = false
                 } else if (coins[i].position.x > -6 && phareavantgauche.position.x > -6) {// ...pièce et voiture à droite
-                  coins[i].visible = false;
+                  if (coins[i].visible == true) {
+                    gains.innerHTML = parseInt(gains.innerHTML) + 1
+                    props.coinsCounterEaten(parseInt(gains.innerHTML))
+                  }
+                  coins[i].visible = false
                 } else if (coins[i].position.z <= phareavantgauche.position.z + vitesse) { // compteur incrémenté s'il n'y a pas eu collision, mais une seule fois au moment où la pièce passe          
-                  if (coins[i].visible == true) { //sinon les coins invisibles en début de jeu sont comptés comme perdus
+                  if (coins[i].visible == true) { //sinon les coins invisibles en début de jeu sont comptés
                     compteur.innerHTML = parseInt(compteur.innerHTML) + 1
                     props.coinsCounter(parseInt(compteur.innerHTML), props.level)
                   }
                   // compteur.innerHTML = "Coin N° " + i + "  " + coins[i].visible
                   if (compteur.innerHTML == 10) {
                     compteur.innerHTML = "GAME OVER !";
+                    //vitesse = 0;
                   }
                 }
               }

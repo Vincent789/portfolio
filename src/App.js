@@ -107,6 +107,7 @@ function App() {
   const [endGame, setGameEnd] = useState(false)
   const [gameOver, setGameOver] = useState("Test")
   const [counter, setCounter] = useState(0)
+  const [counterEaten, setCounterEaten] = useState(0)
 
   let [state, setState] = useState({
     mainKey: "",
@@ -114,6 +115,10 @@ function App() {
   });
 
   //acceleration and breaking
+
+  const callBackEatenCounter = (eaten) => {
+    setCounterEaten(eaten)
+  }
 
   const callBackMissedCounter = (missed) => {
     setCounter(missed)
@@ -599,6 +604,7 @@ function App() {
         propsOn={callBackPreloader}
         displayBorder={displayBorder}
         coinsCounter={callBackMissedCounter}
+        coinsCounterEaten={callBackEatenCounter}
         level={gameLevel}
         gameEnd={endGame}
         mobileDirection={direction}
@@ -610,6 +616,7 @@ function App() {
             height: "0px"
           }}
        >
+          <h1 id="gains" className="home-title">0</h1>
           <h1 id="compteur" className="home-title">0</h1>
           <div
             className="home-sub-sub"
@@ -621,7 +628,7 @@ function App() {
             {t('game.missed')} {counter}
           </h6>
           <h6 className="ratio">
-            {t('game.eaten')} {counter}
+            {t('game.eaten')} {counterEaten}
           </h6>
           <table
             className="arrowtable"
@@ -684,6 +691,7 @@ function App() {
               <h1 
                 className="game-over"
               >{gameOver}</h1>
+              <h2>{counterEaten}</h2>
               <button 
                 className="enter-button" 
                 onClick={() => {

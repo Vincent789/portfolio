@@ -21,6 +21,11 @@ code {
   height: 0px;
 }
 
+#gains {
+  visibility: hidden;
+  height: 0px;
+}
+
 h1.game-over {
   font-size: 7em;
   color: white;
