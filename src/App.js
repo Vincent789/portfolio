@@ -84,6 +84,7 @@ function App() {
   const [getIcon, changeIcon] = useState("soundon.svg");
   const [displayPl, disablePreloader] = useState("block");
 
+
   const [btRefresh, refreshBt] = useState(false);
 
   const [accelerating, accelerate] = useState(false);
@@ -560,6 +561,9 @@ function App() {
                 setBorder("0px solid white")
                 setVisibility("visible")
                 level = 0
+                displayCounter("block")
+                setCounter(0)
+                setCounterEaten(0)
               }}
             >
               Difficult
@@ -575,6 +579,9 @@ function App() {
                 setBorder(false)
                 setVisibility("visible")
                 level = 1
+                displayCounter("block")
+                setCounter(0)
+                setCounterEaten(0)
               }}
             >
               Hard
@@ -590,6 +597,9 @@ function App() {
                 setBorder(false)
                 setVisibility("visible")
                 level = 2
+                displayCounter("block")
+                setCounter(0)
+                setCounterEaten(0)
               }}
             >
               Insane
@@ -608,6 +618,7 @@ function App() {
         level={gameLevel}
         gameEnd={endGame}
         mobileDirection={direction}
+        inGame={inGame}
         />
        <div 
           className="compteur-container"
@@ -704,7 +715,17 @@ function App() {
                 }}>
                 {t('game.home')}
               </button>
-              <button className="enter-button">{t('game.retry')}</button>
+              <button
+                className="enter-button"
+                onClick={() => {
+                  showTime("block")
+                  lightsOff("none")
+                  setCameraRotation(45)
+                  displayGo("none")
+                  displayCounter("block")
+                }}>
+                {t('game.retry')}
+              </button>
               <Router>
                 <Link to="/contact">
                   <button className="enter-button">

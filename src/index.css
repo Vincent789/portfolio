@@ -143,27 +143,6 @@ h1.game-over {
   overflow: scroll;
 }
 
-.closing-cross {
-  font-family: 'Cabin', sans-serif;
-  font-size: 3em;
-  letter-spacing: 0em;
-  text-transform: uppercase;
-  text-decoration: none;
-  position: fixed;
-  top: 0;
-  color: inherit;
-  right: 0.5em;
-  transform: scale(1, .7);
-}
-
-.closing-cross:hover {
-  font-family: 'Cabin', sans-serif;
-  font-size: 4em;
-  letter-spacing: 0em;
-  text-transform: uppercase;
-  color: transparent;
-}
-
 .project-featured-media {
   width: 100%;
 }
@@ -229,6 +208,14 @@ h2.game-control-title {
 .rsc-container {
   width: 100%!important;
 }
+/*
+.rsc {
+  height: 100vh!important;
+}
+
+.rsc-content {
+  height: 80%!important;
+}*/
 
 .preloader{
   background-color: black;
@@ -476,6 +463,34 @@ h2.game-control-title {
   margin-left: 10px;
 }
 
+.closing-cross {
+  text-decoration: none;
+  position: fixed;
+  right: 30px;
+  top: 30px;
+  font-size: 40px;
+  transform: scale(1, 0.8);
+  font-weight: 900;
+}
+
+.closing-cross:hover {
+  opacity: 0.5;
+  transition-duration: 1s;
+}
+
+.closingcross-svg{
+  width: 30px;
+  height: 30px;
+  position: fixed;
+  right: 30px;
+  top: 30px;
+}
+
+.closingcross-svg:hover{
+  opacity: 0.5;
+  transition-duration: 1s;
+}
+
 .language-button:hover {
   border: none;
 }
@@ -546,7 +561,7 @@ h2.game-control-title {
 @media screen and (max-width: 640px) {
   .page-title {
     font-family: "Cabin",sans-serif;
-    font-size: 6em;
+    font-size: 5em;
   }
 
   .enter-button{

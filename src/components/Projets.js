@@ -8,6 +8,7 @@ import {
     Link
 } from "react-router-dom";
 import {useTranslation} from "react-i18next";
+import { ReactSVG } from 'react-svg'
   
 
   function Projets(props) {
@@ -113,7 +114,17 @@ import {useTranslation} from "react-i18next";
         MozTransition: "all 2s ease"
     }}>
         
-        <Link to="/" className="closing-cross">X</Link>
+        <Link 
+            to="/" className="closing-cross"
+            style={{
+                color: txtColor,
+                transition: "all 2s ease",
+                WebkitTransition: "all 2s ease",
+                MozTransition: "all 2s ease"
+            }}
+        >
+           X
+        </Link>
         <div className="container">
         <h1 className="page-title">{t('projects.title')}</h1>
         <h3
@@ -146,7 +157,20 @@ import {useTranslation} from "react-i18next";
                             target="_blank"   
                         >
                             <h2 className="project-title">{post.title.rendered}</h2>
-                            <p className="project-content" dangerouslySetInnerHTML={{__html: post.content.rendered}}></p>
+                            <div 
+                                style={{
+                                    display: t('display1')
+                                }}
+                            >
+                                <p className="project-content" dangerouslySetInnerHTML={{__html: post.content.rendered}}></p>
+                            </div>
+                            <div 
+                                style={{
+                                    display: t('display2')
+                                }}
+                            >
+                                <p className="project-content" dangerouslySetInnerHTML={{__html: post.traduction_française}}></p>
+                            </div>
                             <img className="project-featured-media" src={post.featured_image_url} alt="image_thumbnail"></img>
                         </a>
                     </div>

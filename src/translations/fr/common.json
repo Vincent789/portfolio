@@ -137,5 +137,7 @@
         "thanks5": "L'UCLy pour ses trois années de confiance.",
         "thanks6": "Orlando de Bitume.",
         "linkOrlando": ""
-    }
+    },
+    "display1": "none",
+    "display2": "block"
 }

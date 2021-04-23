@@ -229,6 +229,15 @@ function adjustVertices(terrain, offset, panela, panelb, modificator) {
 
 function Background(props) {
 
+  //************************************
+  function masquerPieces() {
+    for (let i = 0; i < nombre; i++) {
+      coins[i].visible = false
+    }
+    inGame = false
+  }
+  //************************************
+
   //React states
   const [coinsVisible, setCoinsVisible] = useState(false);
   const [milliseconds, setMilliseconds] = useState(0);
@@ -903,23 +912,33 @@ function Background(props) {
           tweenSetX(camera, -6)
           //*****************************************************************
           //Partie ajoutée pour début du jeu. coins[i].position.z < -10 : il faudra mettre la valeur - 10 dans une variable et en ajuster la valeur en fonction de la rapidité du jeu : inférieure pour un jeu plus rapide, supérieure pour un jeu plus lent... à tester.
-
-                if (inGame == false) {  //Retarder l'arrivée des pièces en début de jeu
-                  for (let i = 0; i < nombre; i++) {
-                    if (coins[i].position.z < -10) {
-                      coins[i].visible = true;
-                    }
-                    inGame = true
-                  }
-                }
           //*****************************************************************
           //setCoinsVisible(true)
           //console.log("hey i'm here")
-
+          if (inGame == false) {  //Retarder l'arrivée des pièces en début de jeu
+            for (let i = 0; i < nombre; i++) {
+              if (coins[i].position.z < -10) {
+                coins[i].visible = true;
+              }
+              inGame = true
+            }
+          }
           //camera.position.set( -6, 0.9, 32.7 );
         }
       }
       cameraCheck()
+
+      /*function inGameSet(){
+        if (inGame == false) {  //Retarder l'arrivée des pièces en début de jeu
+          for (let i = 0; i < nombre; i++) {
+            if (coins[i].position.z < -10) {
+              coins[i].visible = true;
+            }
+            inGame = true
+          }
+        }
+      }
+      inGameSet()*/
 
       var animate = function () {
         compteur = document.getElementById("compteur");
@@ -981,8 +1000,27 @@ function Background(props) {
                   }
                   // compteur.innerHTML = "Coin N° " + i + "  " + coins[i].visible
                   if (compteur.innerHTML == 10) {
-                    compteur.innerHTML = "GAME OVER !";
-                    //vitesse = 0;
+                    masquerPieces();
+                    compteur.innerHTML = 0;
+                    gains.innerHTML = 0;
+                    
+                    props.coinsCounter(parseInt(compteur.innerHTML));
+                    props.coinsCounterEaten(parseInt(gains.innerHTML));
+
+                    tweenSetZ(phareavantdroit, 28.7)
+                    tweenSetZ(phareavantgauche, 28.7)
+                    tweenSetZ(pharearrieregauche, 30.4)
+                    tweenSetZ(phare1, 31.28)
+                    tweenSetZ(phare2, 31.28)
+                    tweenSetZ(phare3, 31.28)
+                    tweenSetZ(phare4, 31.28)
+                    tweenSetZ(phare5, 31.28)
+                    tweenSetZ(phare6, 31.28)
+                    tweenSetZ(cylinderwheel1, 30.74)
+                    tweenSetZ(cylinderwheel2, 29.1)
+                    offsetModifier = 0.001
+                    zrank = 100;      
+                    get_break()
                   }
                 }
               }

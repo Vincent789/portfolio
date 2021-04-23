@@ -137,5 +137,7 @@
         "thanks5": "Lyon Catholic University for three years of trust.",
         "thanks6": "Orlando of Bitume.",
         "linkOrlando": ""
-    }
+    },
+    "display1": "block",
+    "display2": "none"
 }

@@ -314,6 +314,15 @@ function Bobotou(props) {
                 headerTitle={t('contact.baseline')}
                 speechSynthesis={{ enable: false, lang: 'en' }}
                 steps={steps}
+                footerStyle={{
+                    position: "fixed",
+                    bottom: "0px"
+                }}
+                style={{
+                    height: "70%",
+                    paddingBottom: "70px"
+                }}
+                width="100%"
                 />
             </ThemeProvider>
         </div>

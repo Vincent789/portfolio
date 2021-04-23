@@ -3,6 +3,7 @@ import Masonry from "react-responsive-masonry"
 import axios from "axios";
 import Bobotou from "./chatbot/Bobotou";
 import ReactHowler from 'react-howler'
+import { ReactSVG } from 'react-svg'
 import {
     BrowserRouter as Router,
     Link
@@ -42,12 +43,13 @@ import {
                         volume={0.05}
             />
             <Link 
-                to="/" 
-                className="closing-cross"
-                onClick={() => {
-                    props.contactOpened(false)
-                    setPlayingOffice(false)
-                }}
+            to="/" className="closing-cross"
+            style={{
+                color: "white",
+                transition: "all 2s ease",
+                WebkitTransition: "all 2s ease",
+                MozTransition: "all 2s ease"
+            }}
             >
             X
             </Link>

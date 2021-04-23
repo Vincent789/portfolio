@@ -12,7 +12,17 @@ function About(props) {
     <div className="projets-container"
         style={{backgroundColor: "black"}}
     >
-        <Link to="/" className="closing-cross">X</Link>
+        <Link 
+            to="/" className="closing-cross"
+            style={{
+                color: "white",
+                transition: "all 2s ease",
+                WebkitTransition: "all 2s ease",
+                MozTransition: "all 2s ease"
+            }}
+        >
+           X
+        </Link>
         <div className="container">
             <h1 className="page-title page-title-contact">{t('about.title')}</h1>
             <ReactSVG
