@@ -26,6 +26,7 @@ var compteur, gains;
 var scene, camera, renderer, composer
 var terrain, geometry, sun, road, water, model
 var level
+var home
 
 var inGame = false;
 
@@ -253,6 +254,7 @@ function Background(props) {
   //console.log("PROPSHERREE !!!! "+props.keyPressed)
   var key = props.keyPressed
   level = props.level
+  home = props.home
   console.log("LEVEL by props "+level)
   //var keyDrop = props.keyDrop
   console.log("ROTATION "+ props.cameraRotation)
@@ -1007,8 +1009,9 @@ function Background(props) {
                     props.coinsCounter(parseInt(compteur.innerHTML), props.level)
                   }
                   // compteur.innerHTML = "Coin N° " + i + "  " + coins[i].visible
-                  if ((compteur.innerHTML == 10 && level == 0)||(compteur.innerHTML == 3 && level == 1)||(compteur.innerHTML == 1 && level == 2)) {
+                  if ((compteur.innerHTML == 10 && level == 0)||(compteur.innerHTML == 3 && level == 1)||(compteur.innerHTML == 1 && level == 2)||(home == true)) {
                     console.log("Props.Level dans la dernière boucle ")
+
                     masquerPieces();
 
                     coins[i].visible = false
@@ -1032,8 +1035,7 @@ function Background(props) {
                     tweenSetZ(cylinderwheel2, 29.1)
                     offsetModifier = 0.001
                     zrank = 100;      
-                    get_break()
-                    
+                    get_break() 
                   }
                 }
               }
@@ -1060,7 +1062,7 @@ function Background(props) {
             immeublesA[i].position.z = positionDepart;
             immeublesB[i].position.z = positionDepart - distance / 2;
         }
-          render()
+        render()
         
         let offset = Date.now() * offsetModifier;
         

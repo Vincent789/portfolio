@@ -11,7 +11,7 @@ import {
   Link
 } from "react-router-dom";
 import ReactHowler from 'react-howler'
-import {GiSoundOff} from 'react-icons/gi'
+import {GiSoundOff, GiStealthBomber} from 'react-icons/gi'
 import {GiSoundOn} from 'react-icons/gi'
 import { ReactSVG } from 'react-svg'
 import Sound from './components/sounddesign/Sound';
@@ -110,11 +110,14 @@ function App() {
   const [counter, setCounter] = useState(0)
   const [counterEaten, setCounterEaten] = useState(0)
 
+  const [home, setHome] = useState(true)
+
   let [state, setState] = useState({
     mainKey: "",
     keyDropped: ""
   });
 
+  //setGame en ne passe jamais à true
   //acceleration and breaking
 
   const callBackEatenCounter = (eaten) => {
@@ -555,6 +558,7 @@ function App() {
                 setCounter(0)
                 setCounterEaten(0)
                 setGameEnd(false)
+                setHome(false)
               }}
             >
               Difficult
@@ -574,6 +578,7 @@ function App() {
                 setCounter(0)
                 setCounterEaten(0)
                 setGameEnd(false)
+                setHome(false)
               }}
             >
               Hard
@@ -593,6 +598,7 @@ function App() {
                 setCounter(0)
                 setCounterEaten(0)
                 setGameEnd(false)
+                setHome(false)
               }}
             >
               Insane
@@ -613,6 +619,7 @@ function App() {
         mobileDirection={direction}
         inGame={inGame}
         counterBack={counter}
+        home={home}
         />
        <div 
           className="compteur-container"
@@ -696,16 +703,19 @@ function App() {
               <h1 
                 className="game-over"
               >{gameOver}</h1>
-              <h2 className="yourScore">{t('game.yourscore')} {counterEaten}</h2>
+              <h2 className="yourScore">
+                {t('game.yourscore')} {counterEaten}
+              </h2>
               <button 
                 className="enter-button" 
                 onClick={() => {
-                  //setGame(false)
+                  //setGame(true)
                   lightsOff("block")
                   setBorder("20px solid white")
                   displayGo("none")
                   setGameEnd(false)
                   setVisibility("hidden")
+                  setHome(true)
                 }}>
                 {t('game.home')}
               </button>
