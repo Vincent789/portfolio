@@ -14,7 +14,7 @@ import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPa
 import { Sky } from 'three/examples/jsm/objects/Sky.js';
 //module eau
 import { Water } from 'three/examples/jsm/objects/Water.js';
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+//import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import SimplexNoise from 'simplex-noise'
 //tween
 import * as TWEEN from '@tweenjs/tween.js'
@@ -25,6 +25,9 @@ import { useStore } from '../../State'
 var compteur, gains;
 var scene, camera, renderer, composer
 var terrain, geometry, sun, road, water, model
+var level
+
+var inGame = false;
 
 var soundacc = new Howl({
   src: ['accel.mp3'],
@@ -56,7 +59,7 @@ var distance = 12;
 var depart = 100; 
 
 
-var inGame = false;
+
 
 var positionDepart;
 
@@ -96,6 +99,17 @@ const params = {
     bloomThreshold: 10,
     bloomRadius: 1
 };
+
+  //************************************
+  function masquerPieces() {
+    for (let i = 0; i < nombre; i++) {
+      coins[i].visible = false
+    }
+    inGame = false
+    //console.log("je suis passé dans masquerPieces")
+  }
+  //************************************
+
 
 /*Immeubles*/
 class immeuble {
@@ -228,15 +242,7 @@ function adjustVertices(terrain, offset, panela, panelb, modificator) {
 }
 
 function Background(props) {
-
-  //************************************
-  function masquerPieces() {
-    for (let i = 0; i < nombre; i++) {
-      coins[i].visible = false
-    }
-    inGame = false
-  }
-  //************************************
+  
 
   //React states
   const [coinsVisible, setCoinsVisible] = useState(false);
@@ -246,6 +252,8 @@ function Background(props) {
 
   //console.log("PROPSHERREE !!!! "+props.keyPressed)
   var key = props.keyPressed
+  level = props.level
+  console.log("LEVEL by props "+level)
   //var keyDrop = props.keyDrop
   console.log("ROTATION "+ props.cameraRotation)
 
@@ -537,7 +545,7 @@ function Background(props) {
           {
             textureWidth: 512,
             textureHeight: 512,
-            waterNormals: new THREE.TextureLoader().load( 'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/waternormals.jpg', function ( texture ) {
+            waterNormals: new THREE.TextureLoader().load( './waternormals.jpeg', function ( texture ) {
 
               texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 
@@ -563,9 +571,9 @@ function Background(props) {
 
         // OrbitControls
 
-        controls = new OrbitControls( camera, renderer.domElement )
+       /* controls = new OrbitControls( camera, renderer.domElement )
         controls.enableKeys = false
-        controls.update()
+        controls.update()*/
 
         let side = 30;
         geometry = new THREE.PlaneGeometry(100, 10, side, side);
@@ -915,14 +923,14 @@ function Background(props) {
           //*****************************************************************
           //setCoinsVisible(true)
           //console.log("hey i'm here")
-          if (inGame == false) {  //Retarder l'arrivée des pièces en début de jeu
-            for (let i = 0; i < nombre; i++) {
-              if (coins[i].position.z < -10) {
-                coins[i].visible = true;
+            if (inGame == false && props.gameEnd == false) {  //Retarder l'arrivée des pièces en début de jeu
+              for (let i = 0; i < nombre; i++) {
+                if (coins[i].position.z < -10) {
+                  coins[i].visible = true;
+                }
+                inGame = true
               }
-              inGame = true
             }
-          }
           //camera.position.set( -6, 0.9, 32.7 );
         }
       }
@@ -999,13 +1007,17 @@ function Background(props) {
                     props.coinsCounter(parseInt(compteur.innerHTML), props.level)
                   }
                   // compteur.innerHTML = "Coin N° " + i + "  " + coins[i].visible
-                  if (compteur.innerHTML == 10) {
+                  if ((compteur.innerHTML == 10 && level == 0)||(compteur.innerHTML == 3 && level == 1)||(compteur.innerHTML == 1 && level == 2)) {
+                    console.log("Props.Level dans la dernière boucle ")
                     masquerPieces();
+
+                    coins[i].visible = false
+
                     compteur.innerHTML = 0;
                     gains.innerHTML = 0;
-                    
-                    props.coinsCounter(parseInt(compteur.innerHTML));
-                    props.coinsCounterEaten(parseInt(gains.innerHTML));
+
+                    //props.coinsCounter(parseInt(compteur.innerHTML));
+                    //props.coinsCounterEaten(parseInt(gains.innerHTML));
 
                     tweenSetZ(phareavantdroit, 28.7)
                     tweenSetZ(phareavantgauche, 28.7)
@@ -1021,6 +1033,7 @@ function Background(props) {
                     offsetModifier = 0.001
                     zrank = 100;      
                     get_break()
+                    
                   }
                 }
               }

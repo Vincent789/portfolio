@@ -50,6 +50,9 @@ import {
                 WebkitTransition: "all 2s ease",
                 MozTransition: "all 2s ease"
             }}
+            onClick={() => {
+                props.contactOpened(false)
+            }}
             >
             X
             </Link>

@@ -18,12 +18,12 @@ code {
 
 #compteur {
   visibility: hidden;
-  height: 0px;
+  height: 0px!important;
 }
 
 #gains {
   visibility: hidden;
-  height: 0px;
+  height: 0px!important;
 }
 
 h1.game-over {
@@ -68,6 +68,7 @@ h1.game-over {
   color: white;
   padding-left: 5%;
   line-height: 0.8em;
+  margin-top: 1em;
 }
 
 .home-sub-sub {
@@ -165,6 +166,28 @@ h1.game-over {
   opacity: 0.5;
   transition-duration: 1s;
 }
+
+.popup-content {
+  top: 10vh !important;
+  width: 80%!important;
+  left: 10%!important;
+  border: none;
+  border-radius: 0px!important;
+  background-color: black;
+  height: 80vh!important;
+  padding: 0px!important;
+}
+
+.popup-overlay {
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100vh;
+}
+
+.popup-arrow {
+  display: none;
+}
+
 
 
 .gamecontrols{
@@ -484,6 +507,11 @@ h2.game-control-title {
   position: fixed;
   right: 30px;
   top: 30px;
+}
+
+.yourScore {
+ text-align: center;
+ color: white;
 }
 
 .closingcross-svg:hover{

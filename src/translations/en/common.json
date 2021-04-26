@@ -92,7 +92,8 @@
         "eaten": "Coins eaten : ",
         "home": "Home",
         "retry": "Retry",
-        "contact": "Call 911"
+        "contact": "Call 911",
+        "yourscore": "Your score : "
     },
     "projects": {
         "title": "Projects",

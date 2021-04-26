@@ -133,7 +133,7 @@ function App() {
       }
     }
     if (level == 1){
-      if (missed > 3){   
+      if (missed > 2){   
         setGameOver("GAME OVER")
         setGameEnd(true)
         displayCounter("none")
@@ -170,27 +170,17 @@ function App() {
 
   const callBackContact = (value) => {
     if (playing == true){
-      if (value == true){
-        if ( playingCarsound == true && playingWaves == true && basscar == true ){
-          setPlayingCarSound(false)
-          setPlayingWaves(false)
-          basscarSet(false)
+        if (value == true){
+            setPlayingCarSound(false)
+            setPlayingWaves(false)
+            basscarSet(false)
         }
         else 
         {
-          setPlayingCarSound(false)
-          setPlayingWaves(false)
-          basscarSet(false)
+            setPlayingCarSound(true)
+            setPlayingWaves(true)
+            basscarSet(true)
         }
-      }
-      else
-      {
-        if ( playingCarsound == false && playingWaves == false && basscar == false ){
-          setPlayingCarSound(true)
-          setPlayingWaves(true)
-          basscarSet(true)
-        }
-      }
     }
     else
     {
@@ -564,6 +554,7 @@ function App() {
                 displayCounter("block")
                 setCounter(0)
                 setCounterEaten(0)
+                setGameEnd(false)
               }}
             >
               Difficult
@@ -582,6 +573,7 @@ function App() {
                 displayCounter("block")
                 setCounter(0)
                 setCounterEaten(0)
+                setGameEnd(false)
               }}
             >
               Hard
@@ -600,6 +592,7 @@ function App() {
                 displayCounter("block")
                 setCounter(0)
                 setCounterEaten(0)
+                setGameEnd(false)
               }}
             >
               Insane
@@ -615,10 +608,11 @@ function App() {
         displayBorder={displayBorder}
         coinsCounter={callBackMissedCounter}
         coinsCounterEaten={callBackEatenCounter}
-        level={gameLevel}
+        level={level}
         gameEnd={endGame}
         mobileDirection={direction}
         inGame={inGame}
+        counterBack={counter}
         />
        <div 
           className="compteur-container"
@@ -627,8 +621,8 @@ function App() {
             height: "0px"
           }}
        >
-          <h1 id="gains" className="home-title">0</h1>
-          <h1 id="compteur" className="home-title">0</h1>
+          <p id="gains">0</p>
+          <p id="compteur">0</p>
           <div
             className="home-sub-sub"
             style = {{
@@ -702,7 +696,7 @@ function App() {
               <h1 
                 className="game-over"
               >{gameOver}</h1>
-              <h2>{counterEaten}</h2>
+              <h2 className="yourScore">{t('game.yourscore')} {counterEaten}</h2>
               <button 
                 className="enter-button" 
                 onClick={() => {

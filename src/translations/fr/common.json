@@ -92,7 +92,8 @@
         "eaten": "Pièces gobées : ",
         "home": "Accueil",
         "retry": "Réessayer",
-        "contact": "17"
+        "contact": "17",
+        "yourscore": "Ton score : "
     },
     "projects": {
         "title": "Projets",

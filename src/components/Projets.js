@@ -9,6 +9,11 @@ import {
 } from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import { ReactSVG } from 'react-svg'
+import ReactPlayer from 'react-player'
+import YouTube from 'react-youtube';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+import YouTubePlayer from "react-player/youtube";
   
 
   function Projets(props) {
@@ -17,6 +22,15 @@ import { ReactSVG } from 'react-svg'
     //const [isShown, setIsShown] = useState(false);
     const [bgColor, setBgColor] = useState("black");
     const [txtColor, setTxtColor] = useState("white");
+
+    const opts = {
+        height: '390',
+        width: '640',
+        playerVars: {
+          // https://developers.google.com/youtube/player_parameters
+          autoplay: 1,
+        },
+    };
 
     function Close(e) {    
         e.preventDefault();    
@@ -40,6 +54,12 @@ import { ReactSVG } from 'react-svg'
         };
     }
 
+    function youtube_parser(url){
+        var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+        var match = url.match(regExp);
+        return (match&&match[7].length==11)? match[7] : false;
+    }
+
     const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
     const [masonryCompressionLevel, setMCL] = useState(3);
 
@@ -60,6 +80,137 @@ import { ReactSVG } from 'react-svg'
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
+    
+
+    function GetContent(props) {    
+        //const isVideo = props.isVideo;
+        let post = props.post
+        let isVideo = post.isvideo
+        if (isVideo == "oui") {
+        return(
+
+            <Popup trigger={
+            
+                <div 
+                className="project-brick"
+                /*onMouseEnter={() => {
+                    setBgColor(setBgRandomColor);
+                   }
+               }*/
+               style={{
+                color: txtColor,
+                transition: "all 2s ease",
+                WebkitTransition: "all 2s ease",
+                MozTransition: "all 2s ease"
+            }}
+            >
+                    <h2 
+                        className="project-title"
+                    >
+                        {post.title.rendered}
+                    </h2>
+                    <div 
+                        style={{
+                            display: t('display1'),
+                        }}
+                    >
+                        <p 
+                            className="project-content" 
+                            dangerouslySetInnerHTML={{__html: post.content.rendered}}
+                        >
+                        
+                        </p>
+                    </div>
+                    <div 
+                        style={{
+                            display: t('display2'),
+                        }}
+                    >
+                        <p 
+                            className="project-content" 
+                            dangerouslySetInnerHTML={{__html: post.traduction_française}}
+                        >
+                        
+                        </p>
+                    </div>
+                    <img className="project-featured-media" src={post.featured_image_url} alt="image_thumbnail"></img>     
+             </div>
+            
+            } position="right center"
+            >
+                <ReactPlayer 
+                    width="100%"
+                    height="100%"
+                    loop={true}
+                    playing={true}
+                    url={post.lien_du_projet}
+                />
+            </Popup>
+
+                
+        )
+        }
+        else
+        {
+        return (
+            <div 
+                        className="project-brick"
+                        /*onMouseEnter={() => {
+                            setBgColor(setBgRandomColor);
+                           }
+                       }*/
+                       style={{
+                        color: txtColor,
+                        transition: "all 2s ease",
+                        WebkitTransition: "all 2s ease",
+                        MozTransition: "all 2s ease"
+                    }}
+                    >
+                        <a 
+                            href={post.lien_du_projet} 
+                            className="project-link"
+                            target="_blank"
+                            style={{
+                                color: txtColor
+                            }}  
+                        >
+                            <h2 
+                                className="project-title"
+                            >
+                                {post.title.rendered}
+                            </h2>
+                            <div 
+                                style={{
+                                    display: t('display1'),
+                                }}
+                            >
+                                <p 
+                                    className="project-content" 
+                                    dangerouslySetInnerHTML={{__html: post.content.rendered}}
+                                >
+                                
+                                </p>
+                            </div>
+                            <div 
+                                style={{
+                                    display: t('display2'),
+                                }}
+                            >
+                                <p 
+                                    className="project-content" 
+                                    dangerouslySetInnerHTML={{__html: post.traduction_française}}
+                                >
+                                
+                                </p>
+                            </div>
+                            <img className="project-featured-media" src={post.featured_image_url} alt="image_thumbnail"></img>
+                        </a>
+                        
+                    </div>
+        )
+        }
+    }
 
     function lightOrDark(color) {
 
@@ -125,8 +276,14 @@ import { ReactSVG } from 'react-svg'
         >
            X
         </Link>
+        <div className="intelligent-background"></div>
         <div className="container">
-        <h1 className="page-title">{t('projects.title')}</h1>
+        <h1 className="page-title"
+            onMouseEnter={() => {
+                setBgColor(setBgRandomColor);
+            }}
+        >{t('projects.title')}
+        </h1>
         <h3
             style={{
                 fontSize: "1em"
@@ -137,43 +294,13 @@ import { ReactSVG } from 'react-svg'
             <div>
             <Masonry columnsCount={masonryCompressionLevel} gutter="40px">
                 {props.posts.map((post, index) => (
-                    <div 
-                        className="project-brick"
-                        onMouseEnter={() => {
-                            setBgColor(setBgRandomColor);
-                            setTxtColor(lightOrDark(bgColor))
-                           }
-                       }
-                    >
-                        <a 
-                            href={post.lien_du_projet} 
-                            className="project-link"
-                            style={{
-                                color: txtColor,
-                                transition: "all 2s ease",
-                                WebkitTransition: "all 2s ease",
-                                MozTransition: "all 2s ease"
-                            }}
-                            target="_blank"   
-                        >
-                            <h2 className="project-title">{post.title.rendered}</h2>
-                            <div 
-                                style={{
-                                    display: t('display1')
-                                }}
-                            >
-                                <p className="project-content" dangerouslySetInnerHTML={{__html: post.content.rendered}}></p>
-                            </div>
-                            <div 
-                                style={{
-                                    display: t('display2')
-                                }}
-                            >
-                                <p className="project-content" dangerouslySetInnerHTML={{__html: post.traduction_française}}></p>
-                            </div>
-                            <img className="project-featured-media" src={post.featured_image_url} alt="image_thumbnail"></img>
-                        </a>
-                    </div>
+                    <GetContent post={post}
+                    style={{
+                        transition: "all 2s ease",
+                        WebkitTransition: "all 2s ease",
+                        MozTransition: "all 2s ease"
+                    }}
+                    />
                 ))}
             </Masonry>
             </div>
